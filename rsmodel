@@ -1,0 +1,17 @@
+#!/usr/bin/python
+
+from etl import extract, transform
+from sqlite3 import connect
+from sys import argv
+
+mode = argv[ 1 ]
+db_name = "item.db"
+
+
+if mode == "extract":
+	db = connect( db_name )
+	extract( db )
+
+elif mode == "transform":
+	db = connect( db_name )
+	transform( db )
