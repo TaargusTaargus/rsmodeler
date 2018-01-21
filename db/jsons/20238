@@ -1,0 +1,18 @@
+{
+    "name": "Charge dragonstone jewellery scroll", 
+    "description": "A scroll for charging dragonstone jewellery.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=20238", 
+    "current": {
+        "trend": "neutral", 
+        "price": 450
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 20238, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 6"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=20238"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Red chinchompa", 
+    "description": "Even more volatile than its vegetarian counterpart.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10034", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,318"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10034, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 35"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10034"
+}

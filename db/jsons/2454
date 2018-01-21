@@ -1,0 +1,18 @@
+{
+    "name": "Antifire potion(3)", 
+    "description": "3 doses of anti-firebreath potion.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=2454", 
+    "current": {
+        "trend": "neutral", 
+        "price": 599
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 2454, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=2454"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Ahrim's robeskirt 0", 
+    "description": "Ahrim the Blighted's armoured robe skirt.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=4878", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1.4m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 4878, 
+    "today": {
+        "trend": "positive", 
+        "price": "+65.0k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=4878"
+}

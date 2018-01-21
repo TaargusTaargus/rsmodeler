@@ -1,0 +1,18 @@
+{
+    "name": "Wood camo legs", 
+    "description": "These should make me harder to spot in wooded areas.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10055", 
+    "current": {
+        "trend": "neutral", 
+        "price": "10.3k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10055, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 192"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10055"
+}

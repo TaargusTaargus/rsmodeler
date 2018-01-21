@@ -1,0 +1,18 @@
+{
+    "name": "Snapdragon", 
+    "description": "A powerful herb.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3000", 
+    "current": {
+        "trend": "neutral", 
+        "price": "7,787"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 3000, 
+    "today": {
+        "trend": "positive", 
+        "price": "+32"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3000"
+}

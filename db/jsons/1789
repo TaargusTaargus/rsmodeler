@@ -1,0 +1,18 @@
+{
+    "name": "Unfired pie dish", 
+    "description": "I need to put this in a pottery oven.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1789", 
+    "current": {
+        "trend": "neutral", 
+        "price": 264
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 1789, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1789"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Dragonfire shield", 
+    "description": "A heavy shield with a snarling, draconic visage.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=11284", 
+    "current": {
+        "trend": "neutral", 
+        "price": "11.4m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 11284, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 541.4k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=11284"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Red spiky vambs", 
+    "description": "Vambraces made from 100% real dragonhide. Now with added spikiness.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10083", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,866"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10083, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 15"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10083"
+}

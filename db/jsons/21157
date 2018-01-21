@@ -1,0 +1,18 @@
+{
+    "name": "Necklace of faith", 
+    "description": "Can grant me prayer in an emergency.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=21157", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,083"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 21157, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=21157"
+}

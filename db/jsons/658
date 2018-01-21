@@ -1,0 +1,18 @@
+{
+    "name": "Green hat", 
+    "description": "A silly green pointed hat.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=658", 
+    "current": {
+        "trend": "neutral", 
+        "price": 627
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 658, 
+    "today": {
+        "trend": "positive", 
+        "price": "+20"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=658"
+}

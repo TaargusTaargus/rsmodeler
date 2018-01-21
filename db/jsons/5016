@@ -1,0 +1,18 @@
+{
+    "name": "Bone spear", 
+    "description": "Basic but brutal!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=5016", 
+    "current": {
+        "trend": "neutral", 
+        "price": 431
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 5016, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 2"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=5016"
+}

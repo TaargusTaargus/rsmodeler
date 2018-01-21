@@ -1,0 +1,18 @@
+{
+    "name": "Yew shortbow", 
+    "description": "A shortbow made out of yew, still effective.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=857", 
+    "current": {
+        "trend": "neutral", 
+        "price": 347
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 857, 
+    "today": {
+        "trend": "positive", 
+        "price": "+1"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=857"
+}

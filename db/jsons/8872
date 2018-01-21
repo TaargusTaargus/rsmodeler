@@ -1,0 +1,18 @@
+{
+    "name": "Bone dagger", 
+    "description": "A powerful dagger.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=8872", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2,586"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 8872, 
+    "today": {
+        "trend": "positive", 
+        "price": "+20"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=8872"
+}

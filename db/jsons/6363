@@ -1,0 +1,18 @@
+{
+    "name": "Villager robe", 
+    "description": "A brightly coloured robe prized by the Tai Bwo Wannai peoples.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=6363", 
+    "current": {
+        "trend": "neutral", 
+        "price": "13.7k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 6363, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=6363"
+}

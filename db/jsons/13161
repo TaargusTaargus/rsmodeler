@@ -1,0 +1,18 @@
+{
+    "name": "Zamorak dragonhide set", 
+    "description": "A set containing a Zamorak dragonhide coif, body, chaps and vambraces.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=13161", 
+    "current": {
+        "trend": "neutral", 
+        "price": "712.9k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 13161, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=13161"
+}

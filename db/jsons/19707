@@ -1,0 +1,18 @@
+{
+    "name": "Amulet of eternal glory", 
+    "description": "A dragonstone amulet with an unlimited supply of magic charges.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=19707", 
+    "current": {
+        "trend": "neutral", 
+        "price": "21.7m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 19707, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 168.9k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=19707"
+}

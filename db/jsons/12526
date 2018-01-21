@@ -1,0 +1,18 @@
+{
+    "name": "Fury ornament kit", 
+    "description": "Use on an amulet of fury to make it look fancier!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12526", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2.3m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 12526, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 36.4k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12526"
+}

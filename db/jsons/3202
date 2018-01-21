@@ -1,0 +1,18 @@
+{
+    "name": "Rune halberd", 
+    "description": "A rune halberd.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3202", 
+    "current": {
+        "trend": "neutral", 
+        "price": "38.1k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 3202, 
+    "today": {
+        "trend": "positive", 
+        "price": "+122"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3202"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Nail beast nails", 
+    "description": "The claws from a nail beast.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10937", 
+    "current": {
+        "trend": "neutral", 
+        "price": "8,066"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10937, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10937"
+}

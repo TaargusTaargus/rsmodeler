@@ -1,0 +1,18 @@
+{
+    "name": "Kebab mix", 
+    "description": "A mixture of chopped tomatoes, onions and ugthanki meat in a bowl.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1881", 
+    "current": {
+        "trend": "neutral", 
+        "price": 142
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 1881, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1881"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Dwarven helmet", 
+    "description": "A sturdy helmet that belonged to Rupert the Beard.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=11200", 
+    "current": {
+        "trend": "neutral", 
+        "price": "41.5k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 11200, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 1,017"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=11200"
+}

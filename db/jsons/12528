@@ -1,0 +1,18 @@
+{
+    "name": "Dark infinity colour kit", 
+    "description": "Use on infinity pieces to recolour them!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12528", 
+    "current": {
+        "trend": "neutral", 
+        "price": "25.6k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 12528, 
+    "today": {
+        "trend": "positive", 
+        "price": "+1,189"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12528"
+}

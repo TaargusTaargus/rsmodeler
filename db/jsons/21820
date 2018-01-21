@@ -1,0 +1,18 @@
+{
+    "name": "Revenant ether", 
+    "description": "Ethereal essence of the revenants.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=21820", 
+    "current": {
+        "trend": "neutral", 
+        "price": 135
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 21820, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=21820"
+}

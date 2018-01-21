@@ -1,0 +1,18 @@
+{
+    "name": "Mithril platebody (g)", 
+    "description": "Mithril platebody with gold trim.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12277", 
+    "current": {
+        "trend": "neutral", 
+        "price": "8,887"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 12277, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 221"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12277"
+}

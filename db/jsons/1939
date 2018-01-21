@@ -1,0 +1,18 @@
+{
+    "name": "Swamp tar", 
+    "description": "A foul smelling thick tar-like substance.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1939", 
+    "current": {
+        "trend": "neutral", 
+        "price": 13
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 1939, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1939"
+}

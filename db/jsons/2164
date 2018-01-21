@@ -1,0 +1,18 @@
+{
+    "name": "Batta tin", 
+    "description": "A deep tin used for baking gnome battas in.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=2164", 
+    "current": {
+        "trend": "neutral", 
+        "price": 1
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 2164, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=2164"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Chef's hat", 
+    "description": "What a silly hat.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1949", 
+    "current": {
+        "trend": "neutral", 
+        "price": 120
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 1949, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 2"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1949"
+}

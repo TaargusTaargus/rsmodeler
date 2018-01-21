@@ -1,0 +1,18 @@
+{
+    "name": "Teleport to house", 
+    "description": "A teleport to one's own house.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=8013", 
+    "current": {
+        "trend": "neutral", 
+        "price": 490
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 8013, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 5"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=8013"
+}

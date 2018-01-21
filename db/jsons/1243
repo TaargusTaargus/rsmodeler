@@ -1,0 +1,18 @@
+{
+    "name": "Mithril spear", 
+    "description": "A mithril tipped spear.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1243", 
+    "current": {
+        "trend": "neutral", 
+        "price": 313
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 1243, 
+    "today": {
+        "trend": "positive", 
+        "price": "+5"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1243"
+}

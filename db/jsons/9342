@@ -1,0 +1,18 @@
+{
+    "name": "Onyx bolts", 
+    "description": "Onyx tipped Runite crossbow bolts.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=9342", 
+    "current": {
+        "trend": "neutral", 
+        "price": "8,746"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 9342, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 11"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=9342"
+}

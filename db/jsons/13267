@@ -1,0 +1,18 @@
+{
+    "name": "Abyssal dagger (p)", 
+    "description": "Something sharp and poisonous from the body of a defeated Abyssal Sire.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=13267", 
+    "current": {
+        "trend": "neutral", 
+        "price": "6.3m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 13267, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=13267"
+}

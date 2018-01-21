@@ -1,0 +1,18 @@
+{
+    "name": "Abyssal whip", 
+    "description": "A weapon from the abyss.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=4151", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2.1m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 4151, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 13.6k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=4151"
+}

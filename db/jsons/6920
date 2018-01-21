@@ -1,0 +1,18 @@
+{
+    "name": "Infinity boots", 
+    "description": "Mystical boots.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=6920", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1.1m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 6920, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 23.8k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=6920"
+}

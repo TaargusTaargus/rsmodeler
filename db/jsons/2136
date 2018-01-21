@@ -1,0 +1,18 @@
+{
+    "name": "Raw bear meat", 
+    "description": "I need to cook this first.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=2136", 
+    "current": {
+        "trend": "neutral", 
+        "price": 134
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 2136, 
+    "today": {
+        "trend": "positive", 
+        "price": "+5"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=2136"
+}

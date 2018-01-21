@@ -1,0 +1,18 @@
+{
+    "name": "Hunters' crossbow", 
+    "description": "A weapon made of bone and wood.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10156", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,293"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10156, 
+    "today": {
+        "trend": "positive", 
+        "price": "+30"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10156"
+}

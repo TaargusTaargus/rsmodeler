@@ -1,0 +1,18 @@
+{
+    "name": "Ankou's leggings", 
+    "description": "These leggings will make your flesh transparent.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=20104", 
+    "current": {
+        "trend": "neutral", 
+        "price": "14.6m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 20104, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=20104"
+}

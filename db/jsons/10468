@@ -1,0 +1,18 @@
+{
+    "name": "Zamorak robe legs", 
+    "description": "Leggings from the Zamorak Vestments.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10468", 
+    "current": {
+        "trend": "neutral", 
+        "price": "113.5k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10468, 
+    "today": {
+        "trend": "positive", 
+        "price": "+4,086"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10468"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Mithril halberd", 
+    "description": "A mithril halberd.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3198", 
+    "current": {
+        "trend": "neutral", 
+        "price": "23.9k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 3198, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3198"
+}

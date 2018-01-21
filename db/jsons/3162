@@ -1,0 +1,18 @@
+{
+    "name": "Sliced banana", 
+    "description": "You swear you had more than three slices before.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3162", 
+    "current": {
+        "trend": "neutral", 
+        "price": 12
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 3162, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3162"
+}

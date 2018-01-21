@@ -1,0 +1,18 @@
+{
+    "name": "Air orb", 
+    "description": "A magic glowing orb.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=573", 
+    "current": {
+        "trend": "neutral", 
+        "price": 959
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 573, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 8"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=573"
+}

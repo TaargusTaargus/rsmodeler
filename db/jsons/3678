@@ -1,0 +1,18 @@
+{
+    "name": "Flamtaer hammer", 
+    "description": "An exquisitely shaped tool specially designed for fixing temples.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3678", 
+    "current": {
+        "trend": "neutral", 
+        "price": "5,803"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 3678, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3678"
+}

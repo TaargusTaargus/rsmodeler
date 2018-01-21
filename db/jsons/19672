@@ -1,0 +1,18 @@
+{
+    "name": "Redwood pyre logs", 
+    "description": "Redwood logs prepared with sacred oil for a funeral pyre.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=19672", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,906"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 19672, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=19672"
+}

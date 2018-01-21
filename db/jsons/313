@@ -1,0 +1,18 @@
+{
+    "name": "Fishing bait", 
+    "description": "For use with a fishing rod.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=313", 
+    "current": {
+        "trend": "neutral", 
+        "price": 4
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 313, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=313"
+}

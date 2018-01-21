@@ -1,0 +1,18 @@
+{
+    "name": "Plank", 
+    "description": "A plank of wood!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=960", 
+    "current": {
+        "trend": "neutral", 
+        "price": 228
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 960, 
+    "today": {
+        "trend": "positive", 
+        "price": "+9"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=960"
+}

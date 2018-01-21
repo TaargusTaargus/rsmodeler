@@ -1,0 +1,18 @@
+{
+    "name": "Adamantite ore", 
+    "description": "This needs refining.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=449", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,159"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 449, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 7"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=449"
+}

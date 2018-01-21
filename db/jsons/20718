@@ -1,0 +1,18 @@
+{
+    "name": "Burnt page", 
+    "description": "It's still warm to the touch.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=20718", 
+    "current": {
+        "trend": "neutral", 
+        "price": "5,450"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 20718, 
+    "today": {
+        "trend": "positive", 
+        "price": "+167"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=20718"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Ancient rune armour set (sk)", 
+    "description": "A set containing a full helm, platebody, skirt and kiteshield.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=13062", 
+    "current": {
+        "trend": "neutral", 
+        "price": "169.8k"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 13062, 
+    "today": {
+        "trend": "positive", 
+        "price": "+2,446"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=13062"
+}

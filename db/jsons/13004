@@ -1,0 +1,18 @@
+{
+    "name": "Mithril trimmed set (lg)", 
+    "description": "A set containing a full helm, platebody, legs and kiteshield.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=13004", 
+    "current": {
+        "trend": "neutral", 
+        "price": "31.4k"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 13004, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 1,322"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=13004"
+}

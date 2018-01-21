@@ -1,0 +1,18 @@
+{
+    "name": "Mystic lava staff", 
+    "description": "It's a slightly magical stick.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3054", 
+    "current": {
+        "trend": "neutral", 
+        "price": "26.3k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 3054, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 70"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3054"
+}

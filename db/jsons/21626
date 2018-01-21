@@ -1,0 +1,18 @@
+{
+    "name": "Sulliuscep cap", 
+    "description": "A Sulliuscep mushroom cap. Edible? Probably...", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=21626", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2,776"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 21626, 
+    "today": {
+        "trend": "positive", 
+        "price": "+122"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=21626"
+}

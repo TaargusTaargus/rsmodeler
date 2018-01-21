@@ -1,0 +1,18 @@
+{
+    "name": "Rune sword", 
+    "description": "A razor sharp sword.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1289", 
+    "current": {
+        "trend": "neutral", 
+        "price": "12.2k"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 1289, 
+    "today": {
+        "trend": "positive", 
+        "price": "+44"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1289"
+}

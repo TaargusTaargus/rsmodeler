@@ -1,0 +1,18 @@
+{
+    "name": "Fremennik shield", 
+    "description": "A wooden shield with a rope rim.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10826", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,604"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10826, 
+    "today": {
+        "trend": "positive", 
+        "price": "+18"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10826"
+}

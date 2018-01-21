@@ -1,8 +1,8 @@
 #!/usr/bin/python
-
 from etl import extract, transform
 from sqlite3 import connect
 from sys import argv
+from manager import TransformManager
 
 mode = argv[ 1 ]
 db_name = "item.db"
@@ -14,4 +14,12 @@ if mode == "extract":
 
 elif mode == "transform":
 	db = connect( db_name )
-	transform( db )
+	cursor = db.cursor()
+	dataset = {}
+	items = cursor.execute( "SELECT * FROM ITEM_SALES" ).fetchall()
+	keys = [ e[ 0 ] for e in cursor.description ]
+	for item in items:
+		item = dict( zip( keys, item ) )
+		dataset[ item[ "itemid" ] ] = item
+	tm = TransformManager( dataset, 2 )	
+	tm.transform()

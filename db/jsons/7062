@@ -1,0 +1,18 @@
+{
+    "name": "Chilli con carne", 
+    "description": "A bowl of meat in chilli-con-carne sauce.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=7062", 
+    "current": {
+        "trend": "neutral", 
+        "price": 17
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 7062, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=7062"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Admiral pie", 
+    "description": "Much tastier than a normal fish pie.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=7198", 
+    "current": {
+        "trend": "neutral", 
+        "price": 115
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 7198, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 2"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=7198"
+}

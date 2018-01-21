@@ -1,0 +1,18 @@
+{
+    "name": "Black demon mask", 
+    "description": "Evil.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=20026", 
+    "current": {
+        "trend": "neutral", 
+        "price": "287.9k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 20026, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 648"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=20026"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Amulet mould", 
+    "description": "Used to make gold amulets.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1595", 
+    "current": {
+        "trend": "neutral", 
+        "price": 139
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 1595, 
+    "today": {
+        "trend": "positive", 
+        "price": "+1"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1595"
+}

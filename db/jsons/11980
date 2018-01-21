@@ -1,0 +1,18 @@
+{
+    "name": "Ring of wealth (5)", 
+    "description": "An enchanted ring with five teleport charges.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=11980", 
+    "current": {
+        "trend": "neutral", 
+        "price": "22.0k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 11980, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 359"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=11980"
+}

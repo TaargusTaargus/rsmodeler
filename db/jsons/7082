@@ -1,0 +1,18 @@
+{
+    "name": "Fried mushrooms", 
+    "description": "A bowl of fried Bittercap mushrooms.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=7082", 
+    "current": {
+        "trend": "neutral", 
+        "price": 103
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 7082, 
+    "today": {
+        "trend": "positive", 
+        "price": "+2"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=7082"
+}

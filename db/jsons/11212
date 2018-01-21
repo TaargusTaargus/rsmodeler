@@ -1,0 +1,18 @@
+{
+    "name": "Dragon arrow", 
+    "description": "An arrow made using a dragon's talon.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=11212", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,477"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 11212, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 6"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=11212"
+}

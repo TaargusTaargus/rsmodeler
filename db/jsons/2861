@@ -1,0 +1,18 @@
+{
+    "name": "Wolfbone arrowtips", 
+    "description": "I can make an ogre arrow with these.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=2861", 
+    "current": {
+        "trend": "neutral", 
+        "price": 122
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 2861, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=2861"
+}

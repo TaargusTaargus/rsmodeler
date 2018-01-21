@@ -1,0 +1,18 @@
+{
+    "name": "Raw mud pie", 
+    "description": "Needs to be baked before I can use it.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=7168", 
+    "current": {
+        "trend": "neutral", 
+        "price": 836
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 7168, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=7168"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Bagged plant 2", 
+    "description": "You can plant this in your garden.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=8433", 
+    "current": {
+        "trend": "neutral", 
+        "price": "5,958"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 8433, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=8433"
+}

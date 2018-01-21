@@ -1,0 +1,18 @@
+{
+    "name": "Snake hide", 
+    "description": "Scaly but not slimy!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=7801", 
+    "current": {
+        "trend": "neutral", 
+        "price": 621
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 7801, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=7801"
+}

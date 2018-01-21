@@ -8,15 +8,8 @@ ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 REQUEST_TIMER = 5
 ROUTES_FILE_PATH = "configs" + sep + "routes"
 
+## this needs to be remote to in memory, not to db...
 def extract( routes=ROUTES_FILE_PATH, db=None, verbose=True ):
-	
-	if db:
-		cursor = db.cursor()
-		cursor.execute( """
-			CREATE TABLE IF NOT EXISTS ITEM_SALES
-				( itemid int, name text, date text, timestamp int, price int )
-		""" )
-		db.commit()
 
 	api = load( open( ROUTES_FILE_PATH ) )
 
@@ -55,21 +48,13 @@ def extract( routes=ROUTES_FILE_PATH, db=None, verbose=True ):
 				graph = load_json_from_url( graph )
 
 				if graph:
-					for point in graph[ "daily" ]:
-						if db:
-							cursor.execute( 
-								"INSERT INTO ITEM_SALES VALUES ( " +
-								str( item[ "id" ] ) + ", '" + item[ "name" ].replace( "'", "''" ) + "', '" +
-								datetime.fromtimestamp( int( int( point ) / 1000 ) ).strftime( "%Y-%m-%d %H:%M:%S" ) +
-								"', " + str( point ) + ", " + str( graph[ "daily" ][ str( point ) ] ) + " )" 
-							)
-						results[ item[ 'id' ] ] = {
-							"name": item[ "name" ],
-							"date": datetime.fromtimestamp( int( int( point ) / 1000 ) ).strftime( "%Y-%m-%d %H:%M:%S" ),
-							"timestamp": point,
-							"price": graph[ "daily" ][ str( point ) ]
-						}
-					db.commit()
+					results[ item[ 'id' ] ] = {
+						"name": item[ "name" ],
+						"itemid": item[ 'id' ],
+						#"date": datetime.fromtimestamp( int( int( point ) / 1000 ) ).strftime( "%Y-%m-%d %H:%M:%S" ),
+						#"timestamp": point,
+						"price": graph[ "daily" ]
+					}
 				else:
 					print( "could not load graph on item: " + str( item[ 'id' ] ) )
 
@@ -80,27 +65,48 @@ def extract( routes=ROUTES_FILE_PATH, db=None, verbose=True ):
 	return results
 
 
-def transform( db ):
+def transform( item_dataset, verbose=True ):
 
-	cursor = None
-
-	try:
-		cursor = db.cursor()
-	except:
-		print( "could not load result set ..." )
-		return None
-
-	cursor.execute( """
-		CREATE TABLE IF NOT EXISTS ITEM_SUMMARY
-		( itemid int )
-	""" )
+	by_item = []
+	item_summary = []
+	price_summary = []
 	
-	items = query_to_array( db, "SELECT DISTINCT ITEMID FROM ITEM_SALES" )
-	keys = column_names( db, "ITEM_SALES" ) 
-	keys = dict( zip( keys, range( len( keys ) ) ) )
+	for item in item_dataset:
 
-	for item in items:
-		price_info = query_to_array( db, "SELECT PRICE FROM ITEM_SALES WHERE ITEMID=" + str( item ) + " ORDER BY TIMESTAMP ASC" )
-		dt = [ 0 ] + price_info[ 1: ]
-		dp = [ a - b for a, b in zip( price_info, dt ) ]
-		ud = [ 1 if e > 0 else ( 0 if e == 0 else -1 ) for e in dp ]
+		if verbose:
+			print( "processing item " + str( item ) + " ..." )		
+
+		item_info = item_dataset[ item ]
+
+		price_info = [ e[ "price" ] for e in item_info ]
+		delta_1day = [ a - b for a, b in zip( price_info[ :-1 ], price_info[ 1: ] ) ] + [ 0 ]
+		plus = [ ( 1 if e > 0  else 0 ) for e in delta_1day ]
+		minus = [ ( 1 if e < 0 else 0 ) for e in delta_1day ]
+		price_average = sum( price_info ) / len( price_info )
+		crossed_average = [ ( 1 if dp and min( [ p, p + dp ] ) <= price_average and price_average <= max( [ p, p + dp ] ) else 0 ) for p, dp in zip( price_info, delta_1day ) ] 
+
+
+		for item_info, delta_1day, positive, negative, crossed_avg in zip( item_info, delta_1day, plus, minus, crossed_average ):
+			by_item.append( {
+				"itemid": item_info[ "itemid" ],
+				"name": item_info[ "name" ],
+				"timestamp": item_info[ "timestamp" ],
+				"date": item_info[ "date" ],
+				"price": item_info[ "price" ],
+				"delta_1day": delta_1day,
+				"plus": positive,
+				"minus": negative,
+				"crossed_average": crossed_avg
+			} )
+
+		item_summary.append( {
+			"itemid": item_info[ "itemid" ],
+			"name": item_info[ "name" ],
+			"price_average": price_average,
+			"plus": sum( plus ),
+			"minus": sum( minus ),
+			"crossed_average": sum( crossed_average )
+		} )
+
+	return ( by_item, item_summary )
+

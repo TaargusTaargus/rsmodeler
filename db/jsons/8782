@@ -1,0 +1,18 @@
+{
+    "name": "Mahogany plank", 
+    "description": "A plank of expensive mahogany.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=8782", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2,073"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 8782, 
+    "today": {
+        "trend": "positive", 
+        "price": "+4"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=8782"
+}

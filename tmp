@@ -1,0 +1,56 @@
+def transform( db, verbose=True ):
+
+	cursor = None
+
+	try:
+		cursor = db.cursor()
+	except:
+		print( "could not load result set ..." )
+		return None
+
+	cursor.execute( """
+		CREATE TABLE IF NOT EXISTS ITEM_SALES_COMPUTED
+		( itemid int, name text, timestamp int, date text, price int, delta_1day int, plus int, minus int, crossed_average bit )
+	""" )
+
+	cursor.execute( """
+		CREATE TABLE IF NOT EXISTS ITEM_SUMMARY
+		( itemid int,  name text, avg_price float, plus int, minus int, total_crossed_average int )
+	""" )
+
+	cursor.execute( """
+		CREATE TABLE IF NOT EXISTS PRICE_SUMMARY
+		( itemid int, price int, frequency int )
+	""" )
+	
+	items = query_to_array( db, "SELECT DISTINCT ITEMID FROM ITEM_SALES" )
+	names = column_names( db, "ITEM_SALES" ) 
+	ordinal = dict( zip( names, range( len( names ) ) ) )
+
+	for item in items:
+
+		if verbose:
+			print( "processing item " + str( item ) + " ..." )		
+
+		item_info = cursor.execute( "SELECT * FROM ITEM_SALES WHERE ITEMID=" + str( item ) + " ORDER BY TIMESTAMP DESC" ).fetchall()
+
+		price_info = [ e[ ordinal[ "price" ] ] for e in item_info ]
+		delta_1day = [ a - b for a, b in zip( price_info[ :-1 ], price_info[ 1: ] ) ] + [ 0 ]
+		plus = [ ( 1 if e > 0  else 0 ) for e in delta_1day ]
+		minus = [ ( 1 if e < 0 else 0 ) for e in delta_1day ]
+		price_average = sum( price_info ) / len( price_info )
+		crossed_average = [ ( 1 if dp and min( [ p, p + dp ] ) <= price_average and price_average <= max( [ p, p + dp ] ) else 0 ) for p, dp in zip( price_info, delta_1day ) ] 
+
+
+		for item_info, delta_1day, positive, negative, crossed_avg in zip( item_info, delta_1day, plus, minus, crossed_average ):
+			cursor.execute( "INSERT INTO ITEM_SALES_COMPUTED VALUES( " + str( item_info[ ordinal[ "itemid" ] ] ) +
+											", '" + item_info[ ordinal[ "name" ] ].replace( "'", "''" ) + "', " + str( item_info[ ordinal[ "timestamp" ] ] ) + 
+											", '" + item_info[ ordinal[ "date" ] ] + "', " + str( item_info[ ordinal[ "price" ] ] ) +
+											", " + str( delta_1day ) + ", " + str( positive ) + ", " + str( negative ) + ", " + str( crossed_avg ) + " )" )
+
+		cursor.execute( "INSERT INTO ITEM_SUMMARY VALUES( " + str( item_info[ ordinal[ "itemid" ] ] ) +
+										", '" + item_info[ ordinal[ "name" ] ].replace( "'", "''" )  + "', " + str( price_average ) +
+										", " + str( sum( plus ) ) + ", " + str( sum( minus ) ) + ", " + str( sum( crossed_average ) ) + " )" )
+	
+		db.commit()	
+

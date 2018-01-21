@@ -1,0 +1,18 @@
+{
+    "name": "Studded body (t)", 
+    "description": "Those studs should provide a bit more protection. Nice trim too!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=7364", 
+    "current": {
+        "trend": "neutral", 
+        "price": "5,608"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 7364, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 46"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=7364"
+}

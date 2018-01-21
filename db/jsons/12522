@@ -1,0 +1,18 @@
+{
+    "name": "Red dragon mask", 
+    "description": "Do I look scary?", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12522", 
+    "current": {
+        "trend": "neutral", 
+        "price": "5,719"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 12522, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12522"
+}

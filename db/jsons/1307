@@ -1,0 +1,18 @@
+{
+    "name": "Bronze 2h sword", 
+    "description": "A two handed sword.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1307", 
+    "current": {
+        "trend": "neutral", 
+        "price": 44
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 1307, 
+    "today": {
+        "trend": "positive", 
+        "price": "+3"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1307"
+}

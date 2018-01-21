@@ -1,0 +1,18 @@
+{
+    "name": "Swamp lizard", 
+    "description": "A very slimy and generally disgusting green lizard.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10149", 
+    "current": {
+        "trend": "neutral", 
+        "price": 100
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10149, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 3"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10149"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Uncut diamond", 
+    "description": "This would be worth more cut.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1617", 
+    "current": {
+        "trend": "neutral", 
+        "price": "3,400"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 1617, 
+    "today": {
+        "trend": "positive", 
+        "price": "+21"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1617"
+}

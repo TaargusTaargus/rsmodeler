@@ -1,0 +1,18 @@
+{
+    "name": "Spined chaps", 
+    "description": "Stylish leg armour for rangers with a lingering smell of raw fish...", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=6135", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2,237"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 6135, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=6135"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Book of balance page set", 
+    "description": "A set containing the four pages of Guthix's Book of Balance.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=13153", 
+    "current": {
+        "trend": "neutral", 
+        "price": "25.1k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 13153, 
+    "today": {
+        "trend": "positive", 
+        "price": "+168"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=13153"
+}

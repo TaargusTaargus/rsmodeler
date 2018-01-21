@@ -1,0 +1,18 @@
+{
+    "name": "Torag's platebody 0", 
+    "description": "Torag the Corrupted's plate body armour.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=4968", 
+    "current": {
+        "trend": "neutral", 
+        "price": "166.3k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 4968, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 221"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=4968"
+}

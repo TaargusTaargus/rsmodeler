@@ -1,0 +1,18 @@
+{
+    "name": "Skills necklace(4)", 
+    "description": "This will help me travel.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=11105", 
+    "current": {
+        "trend": "neutral", 
+        "price": "20.5k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 11105, 
+    "today": {
+        "trend": "positive", 
+        "price": "+2"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=11105"
+}

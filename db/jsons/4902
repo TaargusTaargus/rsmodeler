@@ -1,0 +1,18 @@
+{
+    "name": "Dharok's platelegs 0", 
+    "description": "Dharok the Wretched's plate leg armour.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=4902", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1.1m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 4902, 
+    "today": {
+        "trend": "positive", 
+        "price": "+3,005"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=4902"
+}

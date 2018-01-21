@@ -1,0 +1,18 @@
+{
+    "name": "Adamant kiteshield (g)", 
+    "description": "Adamant kiteshield with gold trim.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=2611", 
+    "current": {
+        "trend": "neutral", 
+        "price": "23.1k"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 2611, 
+    "today": {
+        "trend": "positive", 
+        "price": "+550"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=2611"
+}

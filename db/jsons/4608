@@ -1,0 +1,18 @@
+{
+    "name": "Super kebab", 
+    "description": "A meaty and very hot kebab.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=4608", 
+    "current": {
+        "trend": "neutral", 
+        "price": 306
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 4608, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=4608"
+}

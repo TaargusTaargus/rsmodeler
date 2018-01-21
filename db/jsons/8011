@@ -1,0 +1,18 @@
+{
+    "name": "Ardougne teleport", 
+    "description": "A teleport to East Ardougne.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=8011", 
+    "current": {
+        "trend": "neutral", 
+        "price": 556
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 8011, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 12"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=8011"
+}

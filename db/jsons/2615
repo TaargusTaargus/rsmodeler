@@ -1,0 +1,18 @@
+{
+    "name": "Rune platebody (g)", 
+    "description": "Rune plate body with gold trim.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=2615", 
+    "current": {
+        "trend": "neutral", 
+        "price": "56.7k"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 2615, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 745"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=2615"
+}

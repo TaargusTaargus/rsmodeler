@@ -1,0 +1,18 @@
+{
+    "name": "White magic staff", 
+    "description": "A Magical staff.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=6603", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,290"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 6603, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=6603"
+}

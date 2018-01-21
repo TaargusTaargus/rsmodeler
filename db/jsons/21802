@@ -1,0 +1,18 @@
+{
+    "name": "Revenant cave teleport", 
+    "description": "Teleports you to the Revenant cave in the Wilderness.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=21802", 
+    "current": {
+        "trend": "neutral", 
+        "price": "12.6k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 21802, 
+    "today": {
+        "trend": "positive", 
+        "price": "+601"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=21802"
+}

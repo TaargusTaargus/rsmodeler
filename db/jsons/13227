@@ -1,0 +1,18 @@
+{
+    "name": "Eternal crystal", 
+    "description": "A powerful crystal of magic.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=13227", 
+    "current": {
+        "trend": "neutral", 
+        "price": "3.3m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 13227, 
+    "today": {
+        "trend": "positive", 
+        "price": "+95.8k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=13227"
+}

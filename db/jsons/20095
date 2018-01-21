@@ -1,0 +1,18 @@
+{
+    "name": "Ankou mask", 
+    "description": "This mask will make your flesh transparent.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=20095", 
+    "current": {
+        "trend": "neutral", 
+        "price": "9.4m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 20095, 
+    "today": {
+        "trend": "positive", 
+        "price": "+6,188"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=20095"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Zamorak page 2", 
+    "description": "This seems to have been torn from a book...", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3832", 
+    "current": {
+        "trend": "neutral", 
+        "price": "535.0k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 3832, 
+    "today": {
+        "trend": "positive", 
+        "price": "+19.9k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3832"
+}

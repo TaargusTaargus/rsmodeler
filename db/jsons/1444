@@ -1,0 +1,18 @@
+{
+    "name": "Water talisman", 
+    "description": "A mysterious power emanates from the talisman...", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1444", 
+    "current": {
+        "trend": "neutral", 
+        "price": 155
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 1444, 
+    "today": {
+        "trend": "positive", 
+        "price": "+2"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1444"
+}

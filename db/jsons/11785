@@ -1,0 +1,18 @@
+{
+    "name": "Armadyl crossbow", 
+    "description": "A weapon originally developed for Armadyl's forces.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=11785", 
+    "current": {
+        "trend": "neutral", 
+        "price": "24.7m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 11785, 
+    "today": {
+        "trend": "positive", 
+        "price": "+438.9k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=11785"
+}

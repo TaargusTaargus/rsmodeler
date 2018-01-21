@@ -1,0 +1,18 @@
+{
+    "name": "Saradomin godsword ornament kit", 
+    "description": "Use on a Saradomin godsword to make it look fancier!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=20074", 
+    "current": {
+        "trend": "neutral", 
+        "price": "7.6m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 20074, 
+    "today": {
+        "trend": "positive", 
+        "price": "+191.5k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=20074"
+}

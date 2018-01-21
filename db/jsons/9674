@@ -1,0 +1,18 @@
+{
+    "name": "Proselyte hauberk", 
+    "description": "A Proselyte Temple Knight's armour.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=9674", 
+    "current": {
+        "trend": "neutral", 
+        "price": "12.0k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 9674, 
+    "today": {
+        "trend": "positive", 
+        "price": "+107"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=9674"
+}

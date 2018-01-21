@@ -1,0 +1,18 @@
+{
+    "name": "Clue box", 
+    "description": "Protects your clue scroll if you die.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12789", 
+    "current": {
+        "trend": "neutral", 
+        "price": "23.6k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 12789, 
+    "today": {
+        "trend": "positive", 
+        "price": "+606"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12789"
+}

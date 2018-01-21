@@ -1,0 +1,18 @@
+{
+    "name": "Fishing potion(3)", 
+    "description": "3 doses of Fishing potion.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=151", 
+    "current": {
+        "trend": "neutral", 
+        "price": 293
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 151, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=151"
+}

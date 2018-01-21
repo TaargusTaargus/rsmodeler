@@ -1,0 +1,18 @@
+{
+    "name": "Sweetcorn seed", 
+    "description": "A sweetcorn seed - plant in an allotment.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=5320", 
+    "current": {
+        "trend": "neutral", 
+        "price": 4
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 5320, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=5320"
+}

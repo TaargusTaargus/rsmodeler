@@ -1,0 +1,18 @@
+{
+    "name": "Red firelighter", 
+    "description": "Makes firelighting a lot easier.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=7329", 
+    "current": {
+        "trend": "neutral", 
+        "price": 18
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 7329, 
+    "today": {
+        "trend": "positive", 
+        "price": "+1"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=7329"
+}

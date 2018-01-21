@@ -1,0 +1,18 @@
+{
+    "name": "Black plateskirt (g)", 
+    "description": "Black plateskirt with gold trim.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3473", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2,338"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 3473, 
+    "today": {
+        "trend": "positive", 
+        "price": "+18"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3473"
+}

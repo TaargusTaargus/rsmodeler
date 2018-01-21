@@ -1,0 +1,18 @@
+{
+    "name": "Dark cavalier", 
+    "description": "All for one and one for all!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=2641", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2,439"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 2641, 
+    "today": {
+        "trend": "positive", 
+        "price": "+46"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=2641"
+}

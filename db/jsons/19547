@@ -1,0 +1,18 @@
+{
+    "name": "Necklace of anguish", 
+    "description": "A deep sense of anguish burns within this powerful necklace.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=19547", 
+    "current": {
+        "trend": "neutral", 
+        "price": "12.9m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 19547, 
+    "today": {
+        "trend": "positive", 
+        "price": "+60.7k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=19547"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Bandos rune armour set (lg)", 
+    "description": "A set containing a full helm, platebody, legs and kiteshield.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=13056", 
+    "current": {
+        "trend": "neutral", 
+        "price": "156.4k"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 13056, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 2,905"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=13056"
+}

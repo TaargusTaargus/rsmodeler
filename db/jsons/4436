@@ -1,0 +1,18 @@
+{
+    "name": "Airtight pot", 
+    "description": "This is pretty well sealed.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=4436", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,186"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 4436, 
+    "today": {
+        "trend": "positive", 
+        "price": "+23"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=4436"
+}

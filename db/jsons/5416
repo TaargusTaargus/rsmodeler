@@ -1,0 +1,18 @@
+{
+    "name": "Bananas(5)", 
+    "description": "A fruit basket filled with bananas.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=5416", 
+    "current": {
+        "trend": "neutral", 
+        "price": 267
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 5416, 
+    "today": {
+        "trend": "positive", 
+        "price": "+9"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=5416"
+}

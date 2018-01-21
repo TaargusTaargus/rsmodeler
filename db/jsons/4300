@@ -1,0 +1,18 @@
+{
+    "name": "Ham robe", 
+    "description": "The label says 'Vivid Crimson', but it looks pink to me!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=4300", 
+    "current": {
+        "trend": "neutral", 
+        "price": 426
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 4300, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 4"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=4300"
+}

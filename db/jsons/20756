@@ -1,0 +1,18 @@
+{
+    "name": "Hill giant club", 
+    "description": "A brutal weapon popular among giants.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=20756", 
+    "current": {
+        "trend": "neutral", 
+        "price": "517.3k"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 20756, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=20756"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Kharyrll teleport", 
+    "description": "A teleport to Kharyrll.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12779", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2,206"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 12779, 
+    "today": {
+        "trend": "positive", 
+        "price": "+16"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12779"
+}

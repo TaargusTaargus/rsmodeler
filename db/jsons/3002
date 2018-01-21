@@ -1,0 +1,18 @@
+{
+    "name": "Toadflax potion (unf)", 
+    "description": "I need another ingredient to finish this Toadflax potion.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3002", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2,421"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 3002, 
+    "today": {
+        "trend": "positive", 
+        "price": "+8"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3002"
+}

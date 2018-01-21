@@ -1,0 +1,18 @@
+{
+    "name": "White 2h sword", 
+    "description": "A two handed sword.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=6609", 
+    "current": {
+        "trend": "neutral", 
+        "price": "6,114"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 6609, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=6609"
+}

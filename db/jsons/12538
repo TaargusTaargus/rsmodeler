@@ -1,0 +1,18 @@
+{
+    "name": "Dragon full helm ornament kit", 
+    "description": "Use on a dragon full helm to make it look fancier!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12538", 
+    "current": {
+        "trend": "neutral", 
+        "price": "53.7k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 12538, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 918"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12538"
+}

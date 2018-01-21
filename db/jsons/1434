@@ -1,0 +1,18 @@
+{
+    "name": "Dragon mace", 
+    "description": "A spiky mace.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=1434", 
+    "current": {
+        "trend": "neutral", 
+        "price": "29.6k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 1434, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 89"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=1434"
+}

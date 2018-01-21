@@ -1,0 +1,18 @@
+{
+    "name": "Oyster pearl", 
+    "description": "I could work wonders with a chisel on this pearl.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=411", 
+    "current": {
+        "trend": "neutral", 
+        "price": 337
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 411, 
+    "today": {
+        "trend": "positive", 
+        "price": "+15"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=411"
+}

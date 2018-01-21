@@ -1,0 +1,18 @@
+{
+    "name": "Book of war page set", 
+    "description": "A set containing the four pages of Bandos' Book of War.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=13155", 
+    "current": {
+        "trend": "neutral", 
+        "price": "18.2k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 13155, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=13155"
+}

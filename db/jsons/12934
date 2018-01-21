@@ -1,0 +1,18 @@
+{
+    "name": "Zulrah's scales", 
+    "description": "Flakes of toxic snakeskin.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12934", 
+    "current": {
+        "trend": "neutral", 
+        "price": 132
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 12934, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12934"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Evil chicken legs", 
+    "description": "Evil legs for an evil human wanting to dress like an evil chicken.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=20442", 
+    "current": {
+        "trend": "neutral", 
+        "price": "525.4k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 20442, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=20442"
+}

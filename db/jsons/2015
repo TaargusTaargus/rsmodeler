@@ -1,0 +1,18 @@
+{
+    "name": "Vodka", 
+    "description": "An absolutely clear spirit.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=2015", 
+    "current": {
+        "trend": "neutral", 
+        "price": 306
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 2015, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 17"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=2015"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Dragon bones", 
+    "description": "These would feed a dog for months!", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=536", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2,250"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 536, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 35"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=536"
+}

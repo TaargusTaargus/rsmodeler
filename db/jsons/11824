@@ -1,0 +1,18 @@
+{
+    "name": "Zamorakian spear", 
+    "description": "An evil spear.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=11824", 
+    "current": {
+        "trend": "neutral", 
+        "price": "9.3m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 11824, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 27.6k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=11824"
+}

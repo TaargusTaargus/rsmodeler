@@ -1,0 +1,18 @@
+{
+    "name": "Guthix coif", 
+    "description": "Guthix blessed dragonhide coif.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10382", 
+    "current": {
+        "trend": "neutral", 
+        "price": "43.6k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10382, 
+    "today": {
+        "trend": "positive", 
+        "price": "+1,498"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10382"
+}

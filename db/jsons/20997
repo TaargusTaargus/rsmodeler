@@ -1,0 +1,18 @@
+{
+    "name": "Twisted bow", 
+    "description": "A mystical bow carved from the twisted remains of the Great Olm.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=20997", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1.1b "
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 20997, 
+    "today": {
+        "trend": "positive", 
+        "price": "+617.7k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=20997"
+}

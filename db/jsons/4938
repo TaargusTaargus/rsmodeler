@@ -1,0 +1,18 @@
+{
+    "name": "Karil's crossbow 0", 
+    "description": "Karil the Tainted's repeating crossbow.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=4938", 
+    "current": {
+        "trend": "neutral", 
+        "price": "98.2k"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 4938, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=4938"
+}

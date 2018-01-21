@@ -1,0 +1,18 @@
+{
+    "name": "Bruise blue snelm", 
+    "description": "A moody blue pointed snail shell helmet.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3343", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2,723"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 3343, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 46"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3343"
+}

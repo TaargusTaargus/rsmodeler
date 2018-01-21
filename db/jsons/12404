@@ -1,0 +1,18 @@
+{
+    "name": "Feldip hills teleport", 
+    "description": "Teleports you to Feldip hills.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12404", 
+    "current": {
+        "trend": "neutral", 
+        "price": "4,025"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 12404, 
+    "today": {
+        "trend": "positive", 
+        "price": "+192"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12404"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Mole skin", 
+    "description": "The skin of a large mole.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=7418", 
+    "current": {
+        "trend": "neutral", 
+        "price": "6,109"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 7418, 
+    "today": {
+        "trend": "positive", 
+        "price": "+45"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=7418"
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Magic comp bow", 
+    "description": "A powerful bow made from magic wood.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10284", 
+    "current": {
+        "trend": "neutral", 
+        "price": "1,635"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10284, 
+    "today": {
+        "trend": "positive", 
+        "price": "+38"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10284"
+}

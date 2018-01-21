@@ -1,0 +1,18 @@
+{
+    "name": "Gilded scimitar", 
+    "description": "Rune scimitar with gold plate.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12389", 
+    "current": {
+        "trend": "neutral", 
+        "price": "11.4m"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 12389, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 59.9k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12389"
+}

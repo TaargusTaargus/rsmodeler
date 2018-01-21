@@ -1,0 +1,9 @@
+2: {
+	"itemid": 2,
+	"description": "A powdered wig.",
+	"price": {
+		"000000": 10,
+		"000010": 20,
+	 	...
+	}
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Rune plateskirt (g)", 
+    "description": "Rune plateskirt with gold trim.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3476", 
+    "current": {
+        "trend": "neutral", 
+        "price": "39.6k"
+    }, 
+    "members": "false", 
+    "type": "Default", 
+    "id": 3476, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 125"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3476"
+}

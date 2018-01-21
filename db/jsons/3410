@@ -1,0 +1,18 @@
+{
+    "name": "Serum 207 (3)", 
+    "description": "3 doses serum 207 as described in Herbi Flax's diary.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=3410", 
+    "current": {
+        "trend": "neutral", 
+        "price": 1
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 3410, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=3410"
+}

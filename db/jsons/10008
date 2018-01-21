@@ -1,0 +1,18 @@
+{
+    "name": "Box trap", 
+    "description": "If a creature goes inside, the box should then slam shut.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=10008", 
+    "current": {
+        "trend": "neutral", 
+        "price": 42
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 10008, 
+    "today": {
+        "trend": "positive", 
+        "price": "+1"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=10008"
+}

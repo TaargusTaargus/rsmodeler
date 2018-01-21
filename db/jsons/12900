@@ -1,0 +1,18 @@
+{
+    "name": "Uncharged toxic trident", 
+    "description": "It needs to be charged with death runes, chaos runes, fire runes and Zulrah's scales.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=12900", 
+    "current": {
+        "trend": "neutral", 
+        "price": "2.7m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 12900, 
+    "today": {
+        "trend": "negative", 
+        "price": "- 22.3k"
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=12900"
+}

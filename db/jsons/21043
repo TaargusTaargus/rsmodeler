@@ -1,0 +1,18 @@
+{
+    "name": "Kodai insignia", 
+    "description": "An insignia representing Kodai, Xeric's fearsome wizards.", 
+    "typeIcon": "http://www.runescape.com/img/categories/Default", 
+    "icon_large": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_big.gif?id=21043", 
+    "current": {
+        "trend": "neutral", 
+        "price": "103.0m"
+    }, 
+    "members": "true", 
+    "type": "Default", 
+    "id": 21043, 
+    "today": {
+        "trend": "neutral", 
+        "price": 0
+    }, 
+    "icon": "http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id=21043"
+}
