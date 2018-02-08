@@ -1,33 +1,13 @@
 from os.path import sep
 from json import load
 from time import sleep
-from utilities import column_names, db_insert_dict, load_json_from_url, query_to_array, replace_keys
+from utilities import column_names, load_json_from_url, query_to_array, replace_keys
 from datetime import datetime
-from sqlite3 import connect
+from db import ByItemTable, ItemSummaryTable
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 REQUEST_TIMER = 5
 ROUTES_FILE_PATH = "configs" + sep + "routes"
-
-BY_ITEM_TYPES = {
-	"itemid": "int",
-	"name": "text",
-	"timestamp": "long",
-	"price": "int",
-	"delta_1day": "int",
-	"plus": "int",
-	"minus": "int",
-	"crossed_average": "bit"
-}
-
-ITEM_SUMMARY_TYPES = {
-	"itemid": "int",
-	"name": "text",
-	"price_average": "float",
-	"plus": "int",
-	"minus": "int",
-	"crossed_average": "int"
-}
 
 ## this needs to be remote to in memory, not to db...
 def extract( request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROUTES_FILE_PATH, verbose=True, max_page=-1 ):
@@ -128,27 +108,18 @@ def transform( item_dataset, verbose=True ):
 		} )
 
 	return { 
-		"by_item": { 
-			"data": by_item,
-			"types": BY_ITEM_TYPES 
-		},
-		"item_summary": {
-			"data": item_summary,
-			"types": ITEM_SUMMARY_TYPES
-		}
+		"by_item": by_item,
+		"item_summary": item_summary
 	}
 
 
 def load( datasets, db_name, verbose=True ):
-	db = connect( db_name )
-	cursor = db.cursor()
+  by_item = ByItemTable( db_name )
+  item_summary = ItemSummaryTable( db_name )
 
-	for name in datasets:
-		dataset = datasets[ name ][ "data" ]
-		types = datasets[ name ][ "types" ]
-		print( "CREATE TABLE " + name + "(" + ",".join( [ key + " " + types[ key ] for key in types ] ) + ")" )
-		cursor.execute( "DROP TABLE IF EXISTS " + name )
-		cursor.execute( "CREATE TABLE " + name + "(" + ",".join( [ key + " " + types[ key ] for key in types ] ) + ")" )
-		db.commit()
-		for datapoint in dataset:
-			db_insert_dict( db, name, datapoint )
+  for data in datasets[ 'by_item' ]:
+    by_item.insert_dict( data )
+
+  for data in datasets[ 'item_summary' ]:
+    item_summary.insert_dict( data )
+
