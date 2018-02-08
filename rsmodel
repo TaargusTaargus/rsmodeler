@@ -1,25 +1,13 @@
 #!/usr/bin/python
-from etl import extract, transform
+from etl import extract, transform, load
 from sqlite3 import connect
 from sys import argv
 from manager import TransformManager
+from json import dump, load as jload
 
-mode = argv[ 1 ]
-db_name = "item.db"
-
-
-if mode == "extract":
-	db = connect( db_name )
-	extract( db )
-
-elif mode == "transform":
-	db = connect( db_name )
-	cursor = db.cursor()
-	dataset = {}
-	items = cursor.execute( "SELECT * FROM ITEM_SALES" ).fetchall()
-	keys = [ e[ 0 ] for e in cursor.description ]
-	for item in items:
-		item = dict( zip( keys, item ) )
-		dataset[ item[ "itemid" ] ] = item
-	tm = TransformManager( dataset, 2 )	
-	tm.transform()
+#results = extract( alphabet="z", max_page=1 )
+f = open( "results.json", "rb" )
+results = jload( f )
+results = transform( results )
+print( results )
+load( results, "item.db" )

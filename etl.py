@@ -1,15 +1,36 @@
 from os.path import sep
 from json import load
 from time import sleep
-from utilities import column_names, load_json_from_url, query_to_array, replace_keys
+from utilities import column_names, db_insert_dict, load_json_from_url, query_to_array, replace_keys
 from datetime import datetime
+from sqlite3 import connect
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 REQUEST_TIMER = 5
 ROUTES_FILE_PATH = "configs" + sep + "routes"
 
+BY_ITEM_TYPES = {
+	"itemid": "int",
+	"name": "text",
+	"timestamp": "long",
+	"price": "int",
+	"delta_1day": "int",
+	"plus": "int",
+	"minus": "int",
+	"crossed_average": "bit"
+}
+
+ITEM_SUMMARY_TYPES = {
+	"itemid": "int",
+	"name": "text",
+	"price_average": "float",
+	"plus": "int",
+	"minus": "int",
+	"crossed_average": "int"
+}
+
 ## this needs to be remote to in memory, not to db...
-def extract( routes=ROUTES_FILE_PATH, db=None, verbose=True ):
+def extract( request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROUTES_FILE_PATH, verbose=True, max_page=-1 ):
 
 	api = load( open( ROUTES_FILE_PATH ) )
 
@@ -25,18 +46,18 @@ def extract( routes=ROUTES_FILE_PATH, db=None, verbose=True ):
 
 	placeholders = api[ "placeholders" ]
 
-	for letter in ALPHABET:
+	for letter in alphabet:
 		catalog_keys[ "alpha" ] = letter
 		catalog_keys[ "page" ] = 0	
 		
-		while True:
+		while catalog_keys[ "page" ] - max_page:
 			catalog = replace_keys( catalog_template, placeholders, catalog_keys )
 			catalog = load_json_from_url( catalog )
 
 			if verbose:
 				print( "catalog letter: " + catalog_keys[ "alpha" ]  +  ", page: " + str( catalog_keys[ "page" ] ) )
 
-			if not catalog or not len( catalog ):
+			if not catalog or not len( catalog[ "items" ] ):
 				break
 				
 			for item in catalog[ "items" ]:
@@ -48,17 +69,15 @@ def extract( routes=ROUTES_FILE_PATH, db=None, verbose=True ):
 				graph = load_json_from_url( graph )
 
 				if graph:
-					results[ item[ 'id' ] ] = {
+					results[ item[ "id" ] ] = {
 						"name": item[ "name" ],
-						"itemid": item[ 'id' ],
-						#"date": datetime.fromtimestamp( int( int( point ) / 1000 ) ).strftime( "%Y-%m-%d %H:%M:%S" ),
-						#"timestamp": point,
+						"itemid": item[ "id" ],
 						"price": graph[ "daily" ]
 					}
 				else:
 					print( "could not load graph on item: " + str( item[ 'id' ] ) )
 
-				sleep( REQUEST_TIMER )
+				sleep( request_timer )
 
 			catalog_keys[ "page" ] = catalog_keys[ "page" ] + 1
  
@@ -78,7 +97,8 @@ def transform( item_dataset, verbose=True ):
 
 		item_info = item_dataset[ item ]
 
-		price_info = [ e[ "price" ] for e in item_info ]
+		time_info = item_info[ "price" ].keys()
+		price_info = item_info[ "price" ].values()
 		delta_1day = [ a - b for a, b in zip( price_info[ :-1 ], price_info[ 1: ] ) ] + [ 0 ]
 		plus = [ ( 1 if e > 0  else 0 ) for e in delta_1day ]
 		minus = [ ( 1 if e < 0 else 0 ) for e in delta_1day ]
@@ -86,13 +106,12 @@ def transform( item_dataset, verbose=True ):
 		crossed_average = [ ( 1 if dp and min( [ p, p + dp ] ) <= price_average and price_average <= max( [ p, p + dp ] ) else 0 ) for p, dp in zip( price_info, delta_1day ) ] 
 
 
-		for item_info, delta_1day, positive, negative, crossed_avg in zip( item_info, delta_1day, plus, minus, crossed_average ):
+		for timestamp, price, delta_1day, positive, negative, crossed_avg in zip( time_info, price_info, delta_1day, plus, minus, crossed_average ):
 			by_item.append( {
 				"itemid": item_info[ "itemid" ],
 				"name": item_info[ "name" ],
-				"timestamp": item_info[ "timestamp" ],
-				"date": item_info[ "date" ],
-				"price": item_info[ "price" ],
+				"timestamp": timestamp,
+				"price": price,
 				"delta_1day": delta_1day,
 				"plus": positive,
 				"minus": negative,
@@ -108,5 +127,28 @@ def transform( item_dataset, verbose=True ):
 			"crossed_average": sum( crossed_average )
 		} )
 
-	return ( by_item, item_summary )
+	return { 
+		"by_item": { 
+			"data": by_item,
+			"types": BY_ITEM_TYPES 
+		},
+		"item_summary": {
+			"data": item_summary,
+			"types": ITEM_SUMMARY_TYPES
+		}
+	}
 
+
+def load( datasets, db_name, verbose=True ):
+	db = connect( db_name )
+	cursor = db.cursor()
+
+	for name in datasets:
+		dataset = datasets[ name ][ "data" ]
+		types = datasets[ name ][ "types" ]
+		print( "CREATE TABLE " + name + "(" + ",".join( [ key + " " + types[ key ] for key in types ] ) + ")" )
+		cursor.execute( "DROP TABLE IF EXISTS " + name )
+		cursor.execute( "CREATE TABLE " + name + "(" + ",".join( [ key + " " + types[ key ] for key in types ] ) + ")" )
+		db.commit()
+		for datapoint in dataset:
+			db_insert_dict( db, name, datapoint )
