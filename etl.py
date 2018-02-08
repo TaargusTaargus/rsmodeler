@@ -1,18 +1,19 @@
 from os.path import sep
-from json import load
+from json import load as jload
 from time import sleep
 from utilities import column_names, load_json_from_url, query_to_array, replace_keys
 from datetime import datetime
 from db import ByItemTable, ItemSummaryTable
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
-REQUEST_TIMER = 5
+REQUEST_TIMER = 2
 ROUTES_FILE_PATH = "configs" + sep + "routes"
 
 ## this needs to be remote to in memory, not to db...
 def extract( request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROUTES_FILE_PATH, verbose=True, max_page=-1 ):
 
-	api = load( open( ROUTES_FILE_PATH ) )
+	fp = open( routes, 'rb' )
+	api = jload( fp )
 
 	catalog_template = api[ "base" ] + api[ "endpoints" ][ "catalog" ][ "url" ]
 	catalog_keys = api[ "endpoints" ][ "catalog" ][ "keys" ]
@@ -46,14 +47,15 @@ def extract( request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROUTES_FILE_
 					print( "loading item: " + str( item[ "id" ] ) + " ..." )	
 				graph_keys[ "item" ] = item[ "id" ]
 				graph = replace_keys( graph_template, placeholders, graph_keys )
-				graph = load_json_from_url( graph )
+				response = load_json_from_url( graph ) 
 
-				if graph:
+				if response:
 					results[ item[ "id" ] ] = {
 						"name": item[ "name" ],
 						"itemid": item[ "id" ],
-						"price": graph[ "daily" ]
+						"price": response[ "daily" ]
 					}
+					print( "succesfully loaded item " + str( item[ "id" ] ) + " ..." )
 				else:
 					print( "could not load graph on item: " + str( item[ 'id' ] ) )
 

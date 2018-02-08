@@ -1,8 +1,9 @@
-from json import load
+from json import loads
 from urllib2 import urlopen
 from time import sleep
 
-def load_json_from_url( url, attempts=3, timeout=5 ):
+def load_json_from_url( url, attempts=3, timeout=10 ):  
+
 	if not attempts:
 		print( "was unable to load url: " + url )
 		return None
@@ -15,17 +16,21 @@ def load_json_from_url( url, attempts=3, timeout=5 ):
 	except Exception as e:
 		print( "was unable to open url, trying again ..." )
 		sleep( timeout )
-		load_json_from_url( url, attempts )
+		return load_json_from_url( url, attempts, timeout + 1 )
 
 	if not fp:
-		load_json_from_url( url, attempts )
+		print( "was unable to open url, trying again ..." )
+		return load_json_from_url( url, attempts, timeout + 1 )
 
 	try:
-		return load( fp )
+		json = loads( fp.read() )
+		if json:
+			return json
 	except:
 		print( "was unable to load downloaded json, trying again ..." )
 		sleep( timeout )	
-		load_json_from_url( url, attempts )
+	
+	return load_json_from_url( url, attempts, timeout + 1 )
 
 
 def replace_keys( string, placeholders, keys ):

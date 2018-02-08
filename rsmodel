@@ -5,9 +5,9 @@ from sys import argv
 from manager import TransformManager
 from json import dump, load as jload
 
-#results = extract( alphabet="z", max_page=1 )
-f = open( "results.json", "rb" )
-results = jload( f )
+results = extract( alphabet="abcd" )
+#f = open( "results.json", "rb" )
+#results = jload( f )
 results = transform( results )
-print( results )
+#print( results )
 load( results, "item.db" )
