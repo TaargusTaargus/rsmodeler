@@ -5,9 +5,12 @@ from sys import argv
 from manager import TransformManager
 from json import dump, load as jload
 
-results = extract( alphabet="abcd" )
-#f = open( "results.json", "rb" )
-#results = jload( f )
-results = transform( results )
+#results = extract( alphabet="ab", max_page=1 )
+fr = open( "results.json", "rb" )
+#fw = open( "results.json", "wb" )
+#dump( results, fw )
+results = jload( fr )
+tm = TransformManager( results, 2 )
+results = tm.transform()
 #print( results )
 load( results, "item.db" )

@@ -31,15 +31,15 @@ class Manager( object ):
 			if proc.is_alive():
 				self.proc_list.append( proc )
 			else:
-				results = results + proc.finish()
+				results.append( proc.finish() )
 
-		return results
-
+		return self.finish( results )
 
 
 class Worker( Process ):
 
 	def __init__( self, procedure, args ):
+		super( Worker, self ).__init__()
 		self.procedure = procedure
 		self.args = args
 
@@ -51,7 +51,6 @@ class Worker( Process ):
 		return self.dataset
 
 
-
 class TransformManager( Manager ):
 
 	def __init__( self, dataset, total_procs ):
@@ -59,9 +58,17 @@ class TransformManager( Manager ):
 		Manager.__init__( self, total_procs )
 
 	def	init_proc( self, proc_number ):
-		return Worker( transform, ( self.dataset[ proc_number ], None, None ) )
+		return Worker( transform, ( self.dataset[ proc_number ], True ) )
 
 	def transform( self ):
-		self.run()
+		return self.run()
 
-	
+	def finish( self, worker_results ):
+		ret = { 
+			"by_item": [],
+			"item_summary": []
+		}
+		for dataset in worker_results:
+			ret[ "by_item" ].extend( dataset[ 'by_item' ] )
+			ret[ "item_summary" ].extend( dataset[ 'item_summary' ] )
+		return ret
