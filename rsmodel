@@ -4,13 +4,14 @@ from sqlite3 import connect
 from sys import argv
 from manager import TransformManager
 from json import dump, load as jload
+from multiprocessing import cpu_count
 
 #results = extract( alphabet="ab", max_page=1 )
 fr = open( "results.json", "rb" )
 #fw = open( "results.json", "wb" )
 #dump( results, fw )
 results = jload( fr )
-tm = TransformManager( results, 2 )
+tm = TransformManager( results, cpu_count() )
 results = tm.transform()
 #print( results )
 load( results, "item.db" )

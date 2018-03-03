@@ -17,6 +17,15 @@ class TableAdapter:
     self.db.commit()
 
 
+  def select( self, keys=[ "*" ], where={}, orderby=[] ):
+    return ( self.cursor.execute( 
+               "SELECT " + ", ".join( keys ) + " FROM " + self.table_name
+               + " WHERE " + " AND ".join( [ key + "='" + where[ key ] + "'" for key in where ] )
+               + " ORDER BY " + ", ".join( orderby )
+           ).fetchall(),
+             [ e[ 0 ] for e in self.cursor.description ]
+           )
+
 
 class ByItemTable( TableAdapter ):
 
