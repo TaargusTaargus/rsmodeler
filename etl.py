@@ -3,14 +3,15 @@ from json import load as jload
 from time import sleep
 from utilities import column_names, load_json_from_url, query_to_array, replace_keys
 from datetime import datetime
-from db import ByItemTable, ItemSummaryTable
+from db import ByItemRawTable, ByItemTable, ItemSummaryTable
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 REQUEST_TIMER = 2
 ROUTES_FILE_PATH = "configs" + sep + "routes"
 
-## this needs to be remote to in memory, not to db...
-def extract( request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROUTES_FILE_PATH, verbose=True, max_page=-1 ):
+def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROUTES_FILE_PATH, verbose=True, max_page=-1 ):
+
+	db = ByItemRawTable( db_path )
 
 	fp = open( routes, 'rb' )
 	api = jload( fp )
@@ -22,8 +23,6 @@ def extract( request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROUTES_FILE_
 	graph_template = api[ "base" ] + api[ "endpoints" ][ "graph" ][ "url" ]
 	graph_keys = api[ "endpoints" ][ "graph" ][ "keys" ]
 	graph_keys = dict( zip( graph_keys, [ None ] * len( graph_keys ) ) )
-
-	results = {}
 
 	placeholders = api[ "placeholders" ]
 
@@ -50,12 +49,14 @@ def extract( request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROUTES_FILE_
 				response = load_json_from_url( graph ) 
 
 				if response:
-					results[ item[ "id" ] ] = {
-						"name": item[ "name" ],
-						"itemid": item[ "id" ],
-						"price": response[ "daily" ]
-					}
-					print( "succesfully loaded item " + str( item[ "id" ] ) + " ..." )
+					for el in response[ "daily" ]:
+						db.insert_dict( {
+							"name": item[ "name" ],
+							"itemid": item[ "id" ],
+							"timestamp": el,
+							"price": response[ "daily" ][ el ]
+						} )
+					print( "successfully loaded item " + str( item[ "id" ] ) + " ..." )
 				else:
 					print( "could not load graph on item: " + str( item[ 'id' ] ) )
 
@@ -63,25 +64,28 @@ def extract( request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROUTES_FILE_
 
 			catalog_keys[ "page" ] = catalog_keys[ "page" ] + 1
  
-	return results
+	return True
 
 
-def transform( item_dataset, verbose=True ):
+## i am un multi-coring this for now, will need to look back into making this multithreaded
+def transform( db_name, verbose=True ):
 
-	by_item = []
-	item_summary = []
 	price_summary = []
-	
-	for item in item_dataset:
 
+	by_item_raw = ByItemRawTable( db_name )
+	by_item = ByItemTable( db_name )
+	item_summary = ItemSummaryTable( db_name )	
+
+	print( by_item_raw.select( keys=["itemid"], distinct=True ) )
+
+	for item, name in by_item_raw.select( keys=["itemid", "name"], distinct=True )[ 0 ]:
 		if verbose:
 			print( "processing item " + str( item ) + " ..." )		
 
-		item_info = item_dataset[ item ]
-
-		time_info = item_info[ "price" ].keys()
-		price_info = item_info[ "price" ].values()
-		delta_1day = [ a - b for a, b in zip( price_info[ :-1 ], price_info[ 1: ] ) ] + [ 0 ]
+		item_info = by_item_raw.select( keys=["timestamp", "price"], where={ "itemid": item }, orderby=["timestamp"] )[ 0 ]
+			
+		time_info, price_info = zip( *item_info )
+		delta_1day = [ 0 ] + [ price_info[ i ] - price_info[ i - 1 ]  for i in range( 1, len( price_info ) ) ]
 		plus = [ ( 1 if e > 0  else 0 ) for e in delta_1day ]
 		minus = [ ( 1 if e < 0 else 0 ) for e in delta_1day ]
 		price_average = sum( price_info ) / len( price_info )
@@ -89,9 +93,9 @@ def transform( item_dataset, verbose=True ):
 
 
 		for timestamp, price, delta_1day, positive, negative, crossed_avg in zip( time_info, price_info, delta_1day, plus, minus, crossed_average ):
-			by_item.append( {
-				"itemid": item_info[ "itemid" ],
-				"name": item_info[ "name" ],
+			by_item.insert_dict( {
+				"itemid": item,
+				"name": name,
 				"timestamp": timestamp,
 				"price": price,
 				"delta_1day": delta_1day,
@@ -100,21 +104,20 @@ def transform( item_dataset, verbose=True ):
 				"crossed_average": crossed_avg
 			} )
 
-		item_summary.append( {
-			"itemid": item_info[ "itemid" ],
-			"name": item_info[ "name" ],
+		item_summary.insert_dict( {
+			"itemid": item,
+			"name": name,
 			"price_average": price_average,
+			"min": min( price_info ),
+			"max": max( price_info ),
 			"plus": sum( plus ),
 			"minus": sum( minus ),
 			"crossed_average": sum( crossed_average )
 		} )
 
-	return { 
-		"by_item": by_item,
-		"item_summary": item_summary
-	}
+	return True 
 
-
+'''
 def load( datasets, db_name, verbose=True ):
   by_item = ByItemTable( db_name )
   item_summary = ItemSummaryTable( db_name )
@@ -124,4 +127,4 @@ def load( datasets, db_name, verbose=True ):
 
   for data in datasets[ 'item_summary' ]:
     item_summary.insert_dict( data )
-
+'''

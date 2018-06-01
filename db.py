@@ -17,15 +17,43 @@ class TableAdapter:
     self.db.commit()
 
 
-  def select( self, keys=[ "*" ], where={}, orderby=[] ):
+  def select( self, keys=[ "*" ], where=None, orderby=None, distinct=False ):
+    distinct_clause = ""
+    if distinct:
+      distinct_clause = " DISTINCT "   
+
+    where_clause = ""
+    if where:
+      where_clause = " WHERE " + " AND ".join( [ key + "=" + str( where[ key ] ) + "" for key in where ] )
+
+    orderby_clause = ""
+    if orderby:
+      orderby_clause = " ORDER BY " + ", ".join( orderby )
+    print(
+               "SELECT " + distinct_clause + ", ".join( keys ) + " FROM " + self.table_name
+       + where_clause + orderby_clause    )
     return ( self.cursor.execute( 
-               "SELECT " + ", ".join( keys ) + " FROM " + self.table_name
-               + " WHERE " + " AND ".join( [ key + "='" + where[ key ] + "'" for key in where ] )
-               + " ORDER BY " + ", ".join( orderby )
+               "SELECT " + distinct_clause + ", ".join( keys ) 
+		+ " FROM " + self.table_name
+                + where_clause + orderby_clause
            ).fetchall(),
              [ e[ 0 ] for e in self.cursor.description ]
            )
 
+class ByItemRawTable( TableAdapter ):
+  NAME ="BY_ITEM_RAW"
+
+  def __init__( self, db_name ):
+    TableAdapter.__init__( self, db_name, self.NAME )
+    self.cursor.execute( '''
+      CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
+      (
+        itemid int,
+  	name text,
+        timestamp int,
+	price int
+      )
+    ''' )
 
 class ByItemTable( TableAdapter ):
 
@@ -60,6 +88,8 @@ class ItemSummaryTable( TableAdapter ):
         itemid int,
         name text,
         price_average float,
+	min int,
+	max int,
         plus int,
         minus int,
         crossed_average int
