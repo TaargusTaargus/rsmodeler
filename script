@@ -1,0 +1,8 @@
+#!/bin/bash
+
+wget 'http://oldschoolrunescape.wikia.com/wiki/Grand_Exchange/Buying_limits' && mv Buying_limits limits
+cat limits | grep '<td><a href.*title.*>.*</a>\|</td><td>.*' > extract
+sed 's/<td><a href.*title.*>\(.*\)<\/a>/\1/g' extract > extract_with_names
+sed 's/<\/td><td>\(.*\)/\1/g' extract_with_names > extract_with_names_limits
+sed 's/\([0-9]*\),\([0-9]*\)/\1\2/g' extract_with_names_limits > buy_limits
+rm extract extract_with_names extract_with_names_limits limits
