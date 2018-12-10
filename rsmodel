@@ -8,6 +8,3 @@ from multiprocessing import cpu_count
 
 extract( "item.db", alphabet="a", max_page=1 )
 transform( "item.db" )
-#tm = TransformManager( results, cpu_count() )
-#results = tm.transform()
-#load( results, "item.db" )

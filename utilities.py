@@ -1,6 +1,7 @@
 from json import loads
 from urllib2 import urlopen
 from time import sleep
+from re import findall
 
 def load_json_from_url( url, attempts=3, timeout=10 ):  
 
@@ -31,6 +32,36 @@ def load_json_from_url( url, attempts=3, timeout=10 ):
 		sleep( timeout )	
 	
 	return load_json_from_url( url, attempts, timeout + 1 )
+
+def load_dict_from_url( regex_key, regex_val, url, attempts=3, timeout=10 ):
+
+	if not attempts:
+		print( "was unable to load url: " + url )
+
+	attempts = attempts - 1
+	fp = None
+
+	try:
+		fp = urlopen( url )
+	except Exception as e:
+		print( "was unable to open url, trying again ..." )
+		sleep( timeout )
+		return load_dict_from_url( regex_key, regex_val, url, attempts, timeout + 1 )
+	
+	text = fp.read()
+	
+	if not text:
+		print( "received no text from response, trying again ..." )
+		sleep( timeout )
+		return load_dict_from_url( regex_key, regex_val, url, attempts, timoeut + 1 )
+
+	try:	
+		ret_dict = dict( zip( findall( regex_key, text ), findall( regex_val, text ) ) )
+		if ret_dict:
+			return ret_dict
+
+	except Exception as e:
+		print( "error creating dictionary from given regexes, exitting ..." )
 
 
 def replace_keys( string, placeholders, keys ):

@@ -1,12 +1,14 @@
 from os.path import sep
 from json import load as jload
 from time import sleep
-from utilities import column_names, load_json_from_url, query_to_array, replace_keys
+from utilities import column_names, load_dict_from_url, load_json_from_url, query_to_array, replace_keys
 from datetime import datetime
 from db import ByItemRawTable, ByItemTable, ItemSummaryTable
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
-REQUEST_TIMER = 2
+COUNT_KEY_REGEX = "trade180.*Date\('(.*)'\).*"
+COUNT_VAL_REGEX = "trade180.*\), (.*)]"
+REQUEST_TIMER=3
 ROUTES_FILE_PATH = "configs" + sep + "routes"
 
 def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROUTES_FILE_PATH, verbose=True, max_page=-1 ):
@@ -23,6 +25,10 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROU
 	graph_template = api[ "base" ] + api[ "endpoints" ][ "graph" ][ "url" ]
 	graph_keys = api[ "endpoints" ][ "graph" ][ "keys" ]
 	graph_keys = dict( zip( graph_keys, [ None ] * len( graph_keys ) ) )
+
+	count_template = api[ "base" ] + api[ "endpoints" ][ "count" ][ "url" ]
+	count_keys = api[ "endpoints" ][ "count" ][ "keys" ]
+	count_keys = dict( zip( count_keys, [ None ] * len( count_keys ) ) )
 
 	placeholders = api[ "placeholders" ]
 
@@ -46,15 +52,21 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, routes=ROU
 					print( "loading item: " + str( item[ "id" ] ) + " ..." )	
 				graph_keys[ "item" ] = item[ "id" ]
 				graph = replace_keys( graph_template, placeholders, graph_keys )
-				response = load_json_from_url( graph ) 
+				graph_response = load_json_from_url( graph ) 
 
-				if response:
-					for el in response[ "daily" ]:
+				count_keys[ "item" ] = item[ "id" ]
+				count = replace_keys( count_template, placeholders, count_keys )
+				count_response = load_dict_from_url( COUNT_KEY_REGEX, COUNT_VAL_REGEX, count )
+
+				if graph_response:
+					for el in graph_response[ "daily" ]:
+						date = datetime.utcfromtimestamp( float( el ) / 1000 ).strftime( "%Y/%m/%d" )
 						db.insert_dict( {
 							"name": item[ "name" ],
 							"itemid": item[ "id" ],
 							"timestamp": el,
-							"price": response[ "daily" ][ el ]
+							"units": count_response[ date ] if date in count_response else 0,
+							"price": graph_response[ "daily" ][ el ]
 						} )
 					print( "successfully loaded item " + str( item[ "id" ] ) + " ..." )
 				else:
@@ -117,14 +129,3 @@ def transform( db_name, verbose=True ):
 
 	return True 
 
-'''
-def load( datasets, db_name, verbose=True ):
-  by_item = ByItemTable( db_name )
-  item_summary = ItemSummaryTable( db_name )
-
-  for data in datasets[ 'by_item' ]:
-    by_item.insert_dict( data )
-
-  for data in datasets[ 'item_summary' ]:
-    item_summary.insert_dict( data )
-'''

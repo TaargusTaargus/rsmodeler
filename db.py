@@ -51,6 +51,7 @@ class ByItemRawTable( TableAdapter ):
         itemid int,
   	name text,
         timestamp int,
+	units int,
 	price int
       )
     ''' )
