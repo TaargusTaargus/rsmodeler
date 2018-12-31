@@ -29,9 +29,6 @@ class TableAdapter:
     orderby_clause = ""
     if orderby:
       orderby_clause = " ORDER BY " + ", ".join( orderby )
-    print(
-               "SELECT " + distinct_clause + ", ".join( keys ) + " FROM " + self.table_name
-       + where_clause + orderby_clause    )
     return ( self.cursor.execute( 
                "SELECT " + distinct_clause + ", ".join( keys ) 
 		+ " FROM " + self.table_name
@@ -69,9 +66,10 @@ class ByItemTable( TableAdapter ):
         name text,
         timestamp long,
         price int,
+	units int,
         delta_1day int,
-        plus int,
-        minus int,
+        plus bit,
+        minus bit,
         crossed_average bit 
       )
     ''' )
@@ -93,7 +91,9 @@ class ItemSummaryTable( TableAdapter ):
 	max int,
         plus int,
         minus int,
-        crossed_average int
+	avg_abs_delta1day float,
+        crossed_average int,
+	buy_limit int
       )
     ''' )
     self.db.commit()
