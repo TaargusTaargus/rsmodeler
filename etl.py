@@ -105,18 +105,22 @@ def transform( db_name, verbose=True ):
 		price_average = sum( price_info ) / len( price_info )
 		average_abs_delta1day = sum( [ abs( e ) for e in delta_1day ] ) / len( delta_1day )
 		crossed_average = [ ( 1 if dp and min( [ p, p + dp ] ) <= price_average and price_average <= max( [ p, p + dp ] ) else 0 ) for p, dp in zip( price_info, delta_1day ) ] 
+		buy_limit = None
+		try:
+			buy_limit =  int( limits[ name ].replace( ",", '' ) ) if name in limits else None
+		except:
+			buy_limit = None
 
 		#item_df = DataFrame.from_dict( { 'time': time_info, 'price': price_info } )
 		#model = ARIMA( item_df[ 'price' ].values, order=(5,1,0) )
 		#model_fit = model.fit()	
 
-		for timestamp, price, units, delta_1day, positive, negative, crossed_avg in zip( time_info, price_info, unit_info, delta_1day, plus, minus, crossed_average ):
+		for timestamp, price, delta_1day, positive, negative, crossed_avg in zip( time_info, price_info, delta_1day, plus, minus, crossed_average ):
 			by_item.insert_dict( {
 				"itemid": item,
 				"name": name,
 				"timestamp": timestamp,
 				"price": price,
-				"units": units,
 				"delta_1day": delta_1day,
 				"plus": positive,
 				"minus": negative,
@@ -133,7 +137,7 @@ def transform( db_name, verbose=True ):
 			"minus": sum( minus ),
 			"avg_abs_delta1day": average_abs_delta1day,
 			"crossed_average": sum( crossed_average ),
-			"buy_limit": int( limits[ name ].replace( ",", '' ) ) if name in limits else None
+			"buy_limit": buy_limit
 		} )
 
 	return True 
