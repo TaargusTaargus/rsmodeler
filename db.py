@@ -67,10 +67,11 @@ class ByItemTable( TableAdapter ):
         timestamp long,
         price int,
 	units int,
-        delta_1day int,
-        plus bit,
-        minus bit,
-        crossed_average bit 
+        price_delta_1day int,
+	units_delta_1day int,
+        price_plus bit,
+        price_minus bit,
+        price_crossed_average bit 
       )
     ''' )
 
@@ -87,13 +88,16 @@ class ItemSummaryTable( TableAdapter ):
         itemid int,
         name text,
         price_average float,
-	min int,
-	max int,
-        plus int,
-        minus int,
-	avg_abs_delta1day float,
-        crossed_average int,
-	buy_limit int
+	price_min int,
+	price_max int,
+	units_min int,
+	units_max int,
+        price_plus int,
+        price_minus int,
+	price_avg_abs_delta1day float,
+	units_avg_abs_delta1day float,
+        price_crossed_average int,
+	units_buy_limit int
       )
     ''' )
     self.db.commit()

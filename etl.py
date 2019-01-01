@@ -99,12 +99,14 @@ def transform( db_name, verbose=True ):
 		item_info = by_item_raw.select( keys=["timestamp", "price", "units"], where={ "itemid": item }, orderby=["timestamp"] )[ 0 ]
 		
 		time_info, price_info, unit_info = zip( *item_info )
-		delta_1day = [ 0 ] + [ price_info[ i ] - price_info[ i - 1 ]  for i in range( 1, len( price_info ) ) ]
-		plus = [ ( 1 if e > 0  else 0 ) for e in delta_1day ]
-		minus = [ ( 1 if e < 0 else 0 ) for e in delta_1day ]
+		delta_price_1day = [ 0 ] + [ price_info[ i ] - price_info[ i - 1 ]  for i in range( 1, len( price_info ) ) ]
+		delta_units_1day = [ 0 ] + [ unit_info[ i ] - unit_info[ i - 1 ]  for i in range( 1, len( unit_info ) ) ]
+		plus = [ ( 1 if e > 0  else 0 ) for e in delta_price_1day ]
+		minus = [ ( 1 if e < 0 else 0 ) for e in delta_price_1day ]
 		price_average = sum( price_info ) / len( price_info )
-		average_abs_delta1day = sum( [ abs( e ) for e in delta_1day ] ) / len( delta_1day )
-		crossed_average = [ ( 1 if dp and min( [ p, p + dp ] ) <= price_average and price_average <= max( [ p, p + dp ] ) else 0 ) for p, dp in zip( price_info, delta_1day ) ] 
+		avg_abs_price_delta1day = sum( [ abs( e ) for e in delta_price_1day ] ) / len( delta_price_1day )
+		avg_abs_units_delta1day = sum( delta_units_1day ) / len( delta_units_1day )
+		crossed_average = [ ( 1 if dp and min( [ p, p + dp ] ) <= price_average and price_average <= max( [ p, p + dp ] ) else 0 ) for p, dp in zip( price_info, delta_price_1day ) ] 
 		buy_limit = None
 		try:
 			buy_limit =  int( limits[ name ].replace( ",", '' ) ) if name in limits else None
@@ -115,29 +117,34 @@ def transform( db_name, verbose=True ):
 		#model = ARIMA( item_df[ 'price' ].values, order=(5,1,0) )
 		#model_fit = model.fit()	
 
-		for timestamp, price, delta_1day, positive, negative, crossed_avg in zip( time_info, price_info, delta_1day, plus, minus, crossed_average ):
+		for timestamp, price, units, delta_price_1day, delta_units_1day, positive, negative, crossed_avg in zip( time_info, price_info, unit_info, delta_price_1day, delta_units_1day, plus, minus, crossed_average ):
 			by_item.insert_dict( {
 				"itemid": item,
 				"name": name,
 				"timestamp": timestamp,
 				"price": price,
-				"delta_1day": delta_1day,
-				"plus": positive,
-				"minus": negative,
-				"crossed_average": crossed_avg
+				"units": units,
+				"price_delta_1day": delta_price_1day,
+				"units_delta_1day": delta_units_1day,
+				"price_plus": positive,
+				"price_minus": negative,
+				"price_crossed_average": crossed_avg
 			} )
 
 		item_summary.insert_dict( {
 			"itemid": item,
 			"name": name,
 			"price_average": price_average,
-			"min": min( price_info ),
-			"max": max( price_info ),
-			"plus": sum( plus ),
-			"minus": sum( minus ),
-			"avg_abs_delta1day": average_abs_delta1day,
-			"crossed_average": sum( crossed_average ),
-			"buy_limit": buy_limit
+			"price_min": min( price_info ),
+			"price_max": max( price_info ),
+			"units_min": min( unit_info ),
+			"units_max": max( unit_info ),
+			"price_plus": sum( plus ),
+			"price_minus": sum( minus ),
+			"price_avg_abs_delta1day": avg_abs_price_delta1day,
+			"units_avg_abs_delta1day": avg_abs_units_delta1day,
+			"price_crossed_average": sum( crossed_average ),
+			"units_buy_limit": buy_limit
 		} )
 
 	return True 
