@@ -7,4 +7,4 @@ from json import dump, load as jload
 from multiprocessing import cpu_count
 
 extract( "item.db", alphabet='a', max_page=1 )
-transform( "item.db" )
+#transform( "item.db" )

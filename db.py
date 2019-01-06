@@ -37,22 +37,6 @@ class TableAdapter:
              [ e[ 0 ] for e in self.cursor.description ]
            )
 
-class ByItemRawTable( TableAdapter ):
-  NAME ="BY_ITEM_RAW"
-
-  def __init__( self, db_name ):
-    TableAdapter.__init__( self, db_name, self.NAME )
-    self.cursor.execute( '''
-      CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
-      (
-        itemid int,
-  	name text,
-        timestamp int,
-	units int,
-	price int
-      )
-    ''' )
-
 class ByItemTable( TableAdapter ):
 
   NAME = "BY_ITEM"
@@ -67,14 +51,28 @@ class ByItemTable( TableAdapter ):
         timestamp long,
         price int,
 	units int,
-        price_delta_1day int,
-	units_delta_1day int,
-        price_plus bit,
-        price_minus bit,
         price_crossed_average bit 
       )
     ''' )
 
+
+class ItemDailyTable( TableAdapter ):
+  NAME ="ITEM_DAILY"
+
+  def __init__( self, db_name ):
+    TableAdapter.__init__( self, db_name, self.NAME )
+    self.cursor.execute( '''
+      CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
+      (
+        itemid int,
+  	name text,
+        timestamp int,
+	units int,
+	price int,
+	price_delta_1day int,
+	units_delta_1day int
+      )
+    ''' )
 
 class ItemSummaryTable( TableAdapter ):
 
@@ -87,17 +85,16 @@ class ItemSummaryTable( TableAdapter ):
       ( 
         itemid int,
         name text,
+        members bit,
         price_average float,
+	units_average float,
 	price_min int,
 	price_max int,
 	units_min int,
 	units_max int,
-        price_plus int,
-        price_minus int,
 	price_avg_abs_delta1day float,
 	units_avg_abs_delta1day float,
-        price_crossed_average int,
-	units_buy_limit int
+	units_daily_buy_limit int
       )
     ''' )
     self.db.commit()
