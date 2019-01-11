@@ -16,7 +16,7 @@ REQUEST_TIMER=3
 ROUTES_FILE_PATH = "configs" + sep + "routes"
 API = jload( open( ROUTES_FILE_PATH, 'rb' ) )
 
-def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, verbose=True, max_page=-1 ):
+def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=True, verbose=True, max_page=-1 ):
 
 	item_daily_db = ItemDailyTable( db_path )
 	item_summary_db = ItemSummaryTable( db_path )
@@ -57,15 +57,19 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, verbose=Tr
 				
 			for item in catalog[ "items" ]:
 		
-				if verbose:
-					print( "loading item: " + str( item[ "id" ] ) + " ..." )	
-				graph_keys[ "item" ] = item[ "id" ]
-				graph = replace_keys( graph_template, placeholders, graph_keys )
-				graph_response = load_json_from_url( graph ) 
-
 				detail_keys[ "item" ] = item[ "id" ]
 				detail = replace_keys( detail_template, placeholders, detail_keys )
 				detail_response = load_json_from_url( detail )
+	
+				if not members and "true" in detail_response[ "item" ][ "members" ]: 
+					continue
+
+				if verbose:
+					print( "loading item: " + str( item[ "id" ] ) + " ..." )
+
+				graph_keys[ "item" ] = item[ "id" ]
+				graph = replace_keys( graph_template, placeholders, graph_keys )
+				graph_response = load_json_from_url( graph ) 
 
 				count_keys[ "item" ] = item[ "id" ]
 				count = replace_keys( count_template, placeholders, count_keys )
