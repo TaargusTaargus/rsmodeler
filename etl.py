@@ -43,9 +43,10 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 
 	for letter in alphabet:
 		catalog_keys[ "alpha" ] = letter
-		catalog_keys[ "page" ] = 0	
+		catalog_keys[ "page" ] = 1	
 		
 		while catalog_keys[ "page" ] - max_page:
+			print( "page: " + str( catalog_keys[ "page" ] ) )
 			catalog = replace_keys( catalog_template, placeholders, catalog_keys )
 			catalog = load_json_from_url( catalog )
 
@@ -56,7 +57,8 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 				break
 				
 			for item in catalog[ "items" ]:
-		
+				#print( [ item["name"] for item in catalog[ "items" ] ] )	
+	
 				detail_keys[ "item" ] = item[ "id" ]
 				detail = replace_keys( detail_template, placeholders, detail_keys )
 				detail_response = load_json_from_url( detail )
@@ -102,7 +104,7 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 
 					buy_limit = None
 					try:
-						buy_limit =  int( limits[ name ].replace( ",", '' ) ) if name in limits else None
+						buy_limit =  int( limits[ item[ "name" ] ].replace( ",", '' ) ) if item[ "name" ] in limits else None
 					except:
 						buy_limit = None
 
