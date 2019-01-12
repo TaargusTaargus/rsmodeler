@@ -37,25 +37,6 @@ class TableAdapter:
              [ e[ 0 ] for e in self.cursor.description ]
            )
 
-class ByItemTable( TableAdapter ):
-
-  NAME = "BY_ITEM"
-
-  def __init__( self, db_name ):
-    TableAdapter.__init__( self, db_name, self.NAME )
-    self.cursor.execute( '''
-      CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
-      (
-        itemid int,
-        name text,
-        timestamp long,
-        price int,
-	units int,
-        price_crossed_average bit 
-      )
-    ''' )
-
-
 class ItemDailyTable( TableAdapter ):
   NAME ="ITEM_DAILY"
 
@@ -98,4 +79,23 @@ class ItemSummaryTable( TableAdapter ):
       )
     ''' )
     self.db.commit()
+
+class MyModelTable( TableAdapter ):
+
+  NAME = "MY_MODEL"
+
+  def __init__( self, db_name ):
+    TableAdapter.__init__( self, db_name, self.NAME )
+    self.cursor.execute( '''
+      CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
+      ( 
+        itemid int,
+        name text,
+        price_plus int,
+	price_minus int,
+	price_crossed_average int
+      )
+    ''' )
+    self.db.commit()
+
 

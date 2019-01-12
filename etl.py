@@ -3,9 +3,9 @@ from json import load as jload
 from time import sleep
 from utilities import column_names, load_dict_from_url, load_json_from_url, query_to_array, replace_keys
 from datetime import datetime
-from db import ByItemTable, ItemDailyTable, ItemSummaryTable
-from pandas import DataFrame
-from statsmodels.tsa.arima_model import ARIMA
+from db import MyModelTable, ItemDailyTable, ItemSummaryTable
+#from pandas import DataFrame
+#from statsmodels.tsa.arima_model import ARIMA
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 COUNT_KEY_REGEX = "trade180.*Date\('(.*)'\).*"
@@ -44,9 +44,8 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 	for letter in alphabet:
 		catalog_keys[ "alpha" ] = letter
 		catalog_keys[ "page" ] = 1	
-		
-		while catalog_keys[ "page" ] - max_page:
-			print( "page: " + str( catalog_keys[ "page" ] ) )
+	
+		while max_page - catalog_keys[ "page" ] + 1:
 			catalog = replace_keys( catalog_template, placeholders, catalog_keys )
 			catalog = load_json_from_url( catalog )
 
@@ -135,68 +134,30 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 
 ## i am un multi-coring this for now, will need to look back into making this multithreaded
 def transform( db_name, verbose=True ):
-	return
-'''
-	price_summary = []
+	my_model = MyModelTable( db_name )
+	by_item_daily = ItemDailyTable( db_name )	
 
-	by_item = ByItemTable( db_name )	
-
-	limits = load_dict_from_url( LIMIT_KEY_REGEX, LIMIT_VAL_REGEX, API[ "endpoints" ][ "limits" ][ "url" ] )
-	
-	for item, name in by_item_raw.select( keys=["itemid", "name"], distinct=True )[ 0 ]:
+	for item, name in by_item_daily.select( keys=["itemid", "name"], distinct=True )[ 0 ]:
 		if verbose:
 			print( "processing item " + str( item ) + " ..." )		
 
-		item_info = by_item_raw.select( keys=["timestamp", "price", "units"], where={ "itemid": item }, orderby=["timestamp"] )[ 0 ]
-		
-		time_info, price_info, unit_info = zip( *item_info )
-		delta_price_1day = [ 0 ] + [ price_info[ i ] - price_info[ i - 1 ]  for i in range( 1, len( price_info ) ) ]
-		delta_units_1day = [ 0 ] + [ unit_info[ i ] - unit_info[ i - 1 ]  for i in range( 1, len( unit_info ) ) ]
+		item_info = by_item_daily.select( keys=["price", "price_delta_1day"], where={ "itemid": item } )[ 0 ]	
+		price_info, delta_price_1day = zip( *item_info )
 		plus = [ ( 1 if e > 0  else 0 ) for e in delta_price_1day ]
 		minus = [ ( 1 if e < 0 else 0 ) for e in delta_price_1day ]
 		price_average = sum( price_info ) / len( price_info )
-		avg_abs_price_delta1day = sum( [ abs( e ) for e in delta_price_1day ] ) / len( delta_price_1day )
-		avg_abs_units_delta1day = sum( delta_units_1day ) / len( delta_units_1day )
 		crossed_average = [ ( 1 if dp and min( [ p, p + dp ] ) <= price_average and price_average <= max( [ p, p + dp ] ) else 0 ) for p, dp in zip( price_info, delta_price_1day ) ] 
-		buy_limit = None
-		try:
-			buy_limit =  int( limits[ name ].replace( ",", '' ) ) if name in limits else None
-		except:
-			buy_limit = None
-
+		my_model.insert_dict( {
+			"itemid": item,
+			"name": name,
+			"price_plus": sum( plus ),
+			"price_minus": sum( minus ),
+			"price_crossed_average": sum( crossed_average )
+		} )
 		#item_df = DataFrame.from_dict( { 'time': time_info, 'price': price_info } )
 		#model = ARIMA( item_df[ 'price' ].values, order=(5,1,0) )
 		#model_fit = model.fit()	
-
-		for timestamp, price, units, delta_price_1day, delta_units_1day, positive, negative, crossed_avg in zip( time_info, price_info, unit_info, delta_price_1day, delta_units_1day, plus, minus, crossed_average ):
-			by_item.insert_dict( {
-				"itemid": item,
-				"name": name,
-				"timestamp": timestamp,
-				"price": price,
-				"units": units,
-				"price_delta_1day": delta_price_1day,
-				"units_delta_1day": delta_units_1day,
-				"price_plus": positive,
-				"price_minus": negative,
-				"price_crossed_average": crossed_avg
-			} )
-
-		item_summary.insert_dict( {
-			"itemid": item,
-			"name": name,
-			"price_average": price_average,
-			"price_min": min( price_info ),
-			"price_max": max( price_info ),
-			"units_min": min( unit_info ),
-			"units_max": max( unit_info ),
-			"price_plus": sum( plus ),
-			"price_minus": sum( minus ),
-			"price_avg_abs_delta1day": avg_abs_price_delta1day,
-			"units_avg_abs_delta1day": avg_abs_units_delta1day,
-			"price_crossed_average": sum( crossed_average ),
-			"units_buy_limit": buy_limit
-		} )
+		
 
 	return True 
-'''
+
