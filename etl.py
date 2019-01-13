@@ -10,8 +10,7 @@ from db import MyModelTable, ItemDailyTable, ItemSummaryTable
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 COUNT_KEY_REGEX = "trade180.*Date\('(.*)'\).*"
 COUNT_VAL_REGEX = "trade180.*\), (.*)]"
-LIMIT_KEY_REGEX = "<td><a.*>(.*)</a>|^<td>(.*)"
-LIMIT_VAL_REGEX = "</td><td>(.*)$"
+LIMITS_FILE_PATH = "configs" + sep + "buy_limits"
 REQUEST_TIMER=3
 ROUTES_FILE_PATH = "configs" + sep + "routes"
 API = jload( open( ROUTES_FILE_PATH, 'rb' ) )
@@ -37,7 +36,7 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 	count_keys = API[ "endpoints" ][ "count" ][ "keys" ]
 	count_keys = dict( zip( count_keys, [ None ] * len( count_keys ) ) )
 
-        limits = load_dict_from_url( LIMIT_KEY_REGEX, LIMIT_VAL_REGEX, API[ "endpoints" ][ "limits" ][ "url" ] )
+        limits = jload( open( LIMITS_FILE_PATH, 'rb' ) )
 
 	placeholders = API[ "placeholders" ]
 
@@ -102,7 +101,7 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 
 					buy_limit = None
 					try:
-						buy_limit =  int( limits[ item[ "name" ] ].replace( ",", '' ) ) if item[ "name" ] in limits else None
+						buy_limit =  int( limits[ item[ "name" ] ] ) if item[ "name" ] in limits else None
 					except:
 						buy_limit = None
 
