@@ -1,7 +1,7 @@
 from json import loads
 from urllib2 import urlopen
 from time import sleep
-from re import findall
+from re import findall, MULTILINE
 
 def load_json_from_url( url, attempts=3, timeout=10 ):  
 
@@ -53,10 +53,16 @@ def load_dict_from_url( regex_key, regex_val, url, attempts=3, timeout=10 ):
 	if not text:
 		print( "received no text from response, trying again ..." )
 		sleep( timeout )
-		return load_dict_from_url( regex_key, regex_val, url, attempts, timoeut + 1 )
+		return load_dict_from_url( regex_key, regex_val, url, attempts, timeout + 1 )
 
-	try:	
-		ret_dict = dict( zip( findall( regex_key, text ), findall( regex_val, text ) ) )
+	try:
+		keys = findall( regex_key, text, flags=MULTILINE )
+		if len( keys ) and len( keys[ 0 ] ) > 1:
+			keys = [ e for t in keys for e in t if e ]
+		vals = findall( regex_val, text, flags=MULTILINE )
+		if len( vals ) and len( vals[ 0 ] ) > 1:
+			vals = [ e for t in vals for e in t if e ]
+		ret_dict = dict( zip( keys, vals ) )
 		if ret_dict:
 			return ret_dict
 

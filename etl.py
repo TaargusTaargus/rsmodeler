@@ -10,8 +10,8 @@ from db import MyModelTable, ItemDailyTable, ItemSummaryTable
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 COUNT_KEY_REGEX = "trade180.*Date\('(.*)'\).*"
 COUNT_VAL_REGEX = "trade180.*\), (.*)]"
-LIMIT_KEY_REGEX = "<td><a.*>(.*)</a>.*"
-LIMIT_VAL_REGEX = "</td><td>(.*)"
+LIMIT_KEY_REGEX = "<td><a.*>(.*)</a>|^<td>(.*)"
+LIMIT_VAL_REGEX = "</td><td>(.*)$"
 REQUEST_TIMER=3
 ROUTES_FILE_PATH = "configs" + sep + "routes"
 API = jload( open( ROUTES_FILE_PATH, 'rb' ) )
@@ -56,8 +56,7 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 				break
 				
 			for item in catalog[ "items" ]:
-				#print( [ item["name"] for item in catalog[ "items" ] ] )	
-	
+
 				detail_keys[ "item" ] = item[ "id" ]
 				detail = replace_keys( detail_template, placeholders, detail_keys )
 				detail_response = load_json_from_url( detail )
