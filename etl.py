@@ -134,24 +134,37 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 def transform( db_name, verbose=True ):
 	my_model = MyModelTable( db_name )
 	by_item_daily = ItemDailyTable( db_name )	
+	item_summary = ItemSummaryTable( db_name )
 
 	for item, name in by_item_daily.select( keys=["itemid", "name"], distinct=True )[ 0 ]:
 		if verbose:
 			print( "processing item " + str( item ) + " ..." )		
 
-		item_info = by_item_daily.select( keys=["price", "price_delta_1day"], where={ "itemid": item } )[ 0 ]	
-		price_info, delta_price_1day = zip( *item_info )
+		daily_info = by_item_daily.select( keys=[ "price", "price_delta_1day" ], where={ "itemid": item }, orderby=[ "timestamp" ] )[ 0 ]
+		item_info = item_summary.select( keys=[ "price_min", "price_max", "price_average" ], where={ "itemid": item } )
+		item_info = dict( zip( item_info[ 1 ], item_info[ 0 ][ 0 ] ) )
+
+		price_info, delta_price_1day = zip( *daily_info )
 		plus = [ ( 1 if e > 0  else 0 ) for e in delta_price_1day ]
 		minus = [ ( 1 if e < 0 else 0 ) for e in delta_price_1day ]
-		price_average = sum( price_info ) / len( price_info )
-		crossed_average = [ ( 1 if dp and min( [ p, p + dp ] ) <= price_average and price_average <= max( [ p, p + dp ] ) else 0 ) for p, dp in zip( price_info, delta_price_1day ) ] 
+		price_average = item_info[ 'price_average' ]
+		price_crossed_average = sum( [ ( 1 if dp and min( [ p, p + dp ] ) <= price_average and price_average <= max( [ p, p + dp ] ) else 0 ) for p, dp in zip( price_info, delta_price_1day ) ] )
+		price_current = price_info[ -1 ]
+		price_min_diff = 1 if price_current == item_info[ 'price_min' ] else price_current - item_info[ 'price_min' ]
+		price_max_diff = item_info[ 'price_max' ] - price_current
+
 		my_model.insert_dict( {
 			"itemid": item,
 			"name": name,
+			"price_current": price_current,
 			"price_plus": sum( plus ),
 			"price_minus": sum( minus ),
-			"price_crossed_average": sum( crossed_average )
+			"price_crossed_average": price_crossed_average,
+			"price_min_diff": price_min_diff,
+			"price_max_diff": price_max_diff,
+			"price_potential": price_max_diff * price_crossed_average / price_min_diff
 		} )
+		
 		#item_df = DataFrame.from_dict( { 'time': time_info, 'price': price_info } )
 		#model = ARIMA( item_df[ 'price' ].values, order=(5,1,0) )
 		#model_fit = model.fit()	

@@ -91,9 +91,13 @@ class MyModelTable( TableAdapter ):
       ( 
         itemid int,
         name text,
+	price_current int,
         price_plus int,
 	price_minus int,
-	price_crossed_average int
+	price_crossed_average int,
+	price_min_diff int,
+	price_max_diff int,
+	price_potential float
       )
     ''' )
     self.db.commit()
