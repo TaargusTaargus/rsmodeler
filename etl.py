@@ -87,6 +87,7 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 							"name": item[ "name" ],
 							"itemid": item[ "id" ],
 							"timestamp": el,
+							"day": date,
 							"price": p1,
 							"units": u1,
 							"price_delta_1day": dp,
@@ -101,7 +102,7 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 
 					buy_limit = None
 					try:
-						buy_limit =  int( limits[ item[ "name" ] ] ) if item[ "name" ] in limits else None
+						buy_limit =  int( limits[ item[ "name" ] ] ) * 6 if item[ "name" ] in limits else None
 					except:
 						buy_limit = None
 

@@ -48,6 +48,7 @@ class ItemDailyTable( TableAdapter ):
         itemid int,
   	name text,
         timestamp int,
+	day text,
 	units int,
 	price int,
 	price_delta_1day int,

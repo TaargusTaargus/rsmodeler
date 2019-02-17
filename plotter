@@ -1,14 +1,20 @@
-from db import ByItemTable, ItemSummaryTable
+#!/usr/bin/python
+from db import ItemDailyTable
+from sys import argv, exit
 import matplotlib.pyplot as plt
 
-DB_NAME = "db/item.db"
+if len( argv ) != 3:
+	print( "plotter [DB NAME] [ITEM NAME]" )
+	exit( 1 )
 
-by_item = ByItemTable( DB_NAME )
-item_summary = ItemSummaryTable( DB_NAME )
+DB_NAME = argv[ 1 ]
+ITEM_NAME = argv[ 2 ]
+
+by_item = ItemDailyTable( DB_NAME )
 
 selection, columns = by_item.select( 
         keys=[ "name", "timestamp", "price" ], 
-        where={ "name": "Iron sword" },
+        where={ "name": '"' + ITEM_NAME + '"' },
         orderby=[ "timestamp" ]
 )
 time = [ el[ 1 ] for el in selection ]
