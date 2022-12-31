@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# rsmodeler cron daily
+
+set -e
+
+# get our python full path
+python=$(which python)
+
+# get our database filename
+filename=$(date +%Y-%m-%d-%H:%M)
+
+$python driver.py "db/${filename}.db"

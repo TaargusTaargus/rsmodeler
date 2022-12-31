@@ -163,11 +163,7 @@ def transform( db_name, verbose=True ):
 			"price_min_diff": price_min_diff,
 			"price_max_diff": price_max_diff,
 			"price_potential": price_max_diff * price_crossed_average / price_min_diff
-		} )
-		
-		#item_df = DataFrame.from_dict( { 'time': time_info, 'price': price_info } )
-		#model = ARIMA( item_df[ 'price' ].values, order=(5,1,0) )
-		#model_fit = model.fit()	
+		} )	
 		
 
 	return True 
