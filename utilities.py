@@ -1,9 +1,9 @@
 from json import loads
-from urllib2 import urlopen
+from urllib2 import Request, urlopen
 from time import sleep
 from re import findall
 
-def load_json_from_url( url, attempts=3, timeout=10 ):  
+def load_json_from_url( url, attempts=3, timeout=10, headers = None ):  
 
 	if not attempts:
 		print( "was unable to load url: " + url )
@@ -12,16 +12,23 @@ def load_json_from_url( url, attempts=3, timeout=10 ):
 	attempts = attempts - 1
 	fp = None
 
+
 	try:
-		fp = urlopen( url )
+		if headers:
+			request = Request( url, headers = headers )
+		else:
+			request = Request( url )
+			
+		fp = urlopen( request )
 	except Exception as e:
-		print( "was unable to open url, trying again ..." )
+		print( "was unable to open url ( " + url + " ), trying again ..." )
+		print( e )
 		sleep( timeout )
-		return load_json_from_url( url, attempts, timeout + 1 )
+		return load_json_from_url( url, attempts, timeout + 1, headers )
 
 	if not fp:
-		print( "was unable to open url, trying again ..." )
-		return load_json_from_url( url, attempts, timeout + 1 )
+		print( "was unable to open url ( " + url + " ) , trying again ..." )
+		return load_json_from_url( url, attempts, timeout + 1, headers )
 
 	try:
 		json = loads( fp.read() )
@@ -33,27 +40,33 @@ def load_json_from_url( url, attempts=3, timeout=10 ):
 	
 	return load_json_from_url( url, attempts, timeout + 1 )
 
-def load_dict_from_url( regex_key, regex_val, url, attempts=3, timeout=10 ):
+def load_dict_from_url( regex_key, regex_val, url, attempts=3, timeout=10, headers = None ):
 
 	if not attempts:
 		print( "was unable to load url: " + url )
 
 	attempts = attempts - 1
 	fp = None
-
+	
 	try:
-		fp = urlopen( url )
+		if headers:
+			request = Request( url, headers = headers )
+		else:
+			request = Request( url )
+			
+		fp = urlopen( request )
 	except Exception as e:
-		print( "was unable to open url, trying again ..." )
+		print( e )
+		print( "was unable to open url ( " + url + " ), trying again ..." )
 		sleep( timeout )
-		return load_dict_from_url( regex_key, regex_val, url, attempts, timeout + 1 )
+		return load_dict_from_url( regex_key, regex_val, url, attempts, timeout + 1, headers )
 	
 	text = fp.read()
 	
 	if not text:
 		print( "received no text from response, trying again ..." )
 		sleep( timeout )
-		return load_dict_from_url( regex_key, regex_val, url, attempts, timeout + 1 )
+		return load_dict_from_url( regex_key, regex_val, url, attempts, timeout + 1, headers )
 
 	try:
 		ret_dict = dict( zip( findall( regex_key, text ), findall( regex_val, text ) ) )

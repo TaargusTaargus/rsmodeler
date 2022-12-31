@@ -2,20 +2,20 @@
   "base": "http://services.runescape.com/m=itemdb_oldschool",
   "endpoints": {
     "catalog": {
-      "url": "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/items.json?category=1&alpha={name}&page={page}",
+      "url": "https://secure.runescape.com/m=itemdb_oldschool/api/catalogue/items.json?category=1&alpha={name}&page={page}",
       "keys": [ "alpha", "page" ]
     },
     "detail": {
-      "url": "http://services.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item={itemid}",
+      "url": "https://secure.runescape.com/m=itemdb_oldschool/api/catalogue/detail.json?item={itemid}",
       "keys": [ "item" ]
     },
     "graph": {
-      "url": "http://services.runescape.com/m=itemdb_oldschool/api/graph/{itemid}.json",
+      "url": "https://secure.runescape.com/m=itemdb_oldschool/api/graph/{itemid}.json",
       "keys": [ "item" ]
     },
     "count": {
-      "url": "http://services.runescape.com/m=itemdb_oldschool/viewitem?obj={itemid}",
-      "keys": [ "item" ]
+      "url": "https://secure.runescape.com/m=itemdb_oldschool/{name}/viewitem?obj={itemid}",
+      "keys": [ "alpha", "item" ]
     },
     "limits": {
       "url": "http://oldschoolrunescape.wikia.com/wiki/Grand_Exchange/Buying_limits"

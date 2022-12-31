@@ -4,8 +4,6 @@ from time import sleep
 from utilities import column_names, load_dict_from_url, load_json_from_url, query_to_array, replace_keys
 from datetime import datetime
 from db import MyModelTable, ItemDailyTable, ItemSummaryTable
-#from pandas import DataFrame
-#from statsmodels.tsa.arima_model import ARIMA
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 COUNT_KEY_REGEX = "trade180.*Date\('(.*)'\).*"
@@ -36,7 +34,7 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 	count_keys = API[ "endpoints" ][ "count" ][ "keys" ]
 	count_keys = dict( zip( count_keys, [ None ] * len( count_keys ) ) )
 
-        limits = jload( open( LIMITS_FILE_PATH, 'rb' ) )
+	limits = jload( open( LIMITS_FILE_PATH, 'rb' ) )
 
 	placeholders = API[ "placeholders" ]
 
@@ -64,15 +62,16 @@ def extract( db_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=Tr
 					continue
 
 				if verbose:
-					print( "loading item: " + str( item[ "id" ] ) + " ..." )
+					print( "loading item: '" + str( item[ "name" ] ) + "' ( " + str( item[ "id" ] ) + " ) ..." )
 
 				graph_keys[ "item" ] = item[ "id" ]
 				graph = replace_keys( graph_template, placeholders, graph_keys )
 				graph_response = load_json_from_url( graph ) 
 
 				count_keys[ "item" ] = item[ "id" ]
+				count_keys[ "alpha" ] = item[ "name" ].replace( " ", "+" )
 				count = replace_keys( count_template, placeholders, count_keys )
-				count_response = load_dict_from_url( COUNT_KEY_REGEX, COUNT_VAL_REGEX, count )
+				count_response = load_dict_from_url( COUNT_KEY_REGEX, COUNT_VAL_REGEX, count, headers = {'User-Agent':'Magic Browser'} )
 
 				if graph_response:
 					p0, u0 = None, None

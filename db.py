@@ -83,7 +83,7 @@ class ItemSummaryTable( TableAdapter ):
 
 class MyModelTable( TableAdapter ):
 
-  NAME = "MY_MODEL"
+  NAME = "MODEL"
 
   def __init__( self, db_name ):
     TableAdapter.__init__( self, db_name, self.NAME )

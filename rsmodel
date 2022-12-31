@@ -1,10 +1,9 @@
 #!/usr/bin/python
+from datetime import datetime
 from etl import extract, transform
-from sqlite3 import connect
-from sys import argv
-from manager import TransformManager
-from json import dump, load as jload
-from multiprocessing import cpu_count
 
-extract( "item.db" )
-transform( "item.db" )
+today = datetime.now()
+timestamp = today.strftime( "%m-%d-%Y-%H:%M:%S" )
+
+extract( "db/item-" + timestamp   + ".db" )
+transform( "db/item-" + timestamp + ".db" )
