@@ -114,9 +114,7 @@ def extract( db_path, config_path, request_timer=REQUEST_TIMER, alphabet=ALPHABE
 					print( "could not load graph on item: " + str( item[ 'id' ] ) )
 
 				sleep( REQUEST_TIMER )
-				
-				####
-				return True
+	
 
 			catalog_keys[ "page" ] = catalog_keys[ "page" ] + 1
  
