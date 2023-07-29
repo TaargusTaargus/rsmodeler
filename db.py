@@ -17,10 +17,16 @@ class TableAdapter:
     self.db.commit()
 
 
-  def select( self, keys=[ "*" ], where=None, orderby=None, distinct=False ):
+  def select( self, keys=[ "*" ], where=None, orderby=None, groupby=None, distinct=False ):
     distinct_clause = ""
     if distinct:
       distinct_clause = " DISTINCT "   
+
+    select_clause = ""
+    if keys:
+    	select_clause = ", ".join( keys )
+    else:
+    	return None
 
     where_clause = ""
     if where:
@@ -29,36 +35,47 @@ class TableAdapter:
     orderby_clause = ""
     if orderby:
       orderby_clause = " ORDER BY " + ", ".join( orderby )
+      
+    groupby_clause = ""
+    if groupby:
+      groupby_clause = ", ".join( groupby )
+      select_clause = groupby_clause + ", " + select_clause
+      groupby_clause = " GROUP BY " + groupby_clause
+      
     return ( self.cursor.execute( 
-               "SELECT " + distinct_clause + ", ".join( keys ) 
+               "SELECT " + distinct_clause 
+                + select_clause
 		+ " FROM " + self.table_name
-                + where_clause + orderby_clause
+                + where_clause 
+                + groupby_clause 
+                + orderby_clause
            ).fetchall(),
              [ e[ 0 ] for e in self.cursor.description ]
            )
 
-class ItemDailyTable( TableAdapter ):
-  NAME ="ITEM_DAILY"
+class ItemDailyFactsTable( TableAdapter ):
+  NAME ="ITEM_DAILY_FACTS"
 
   def __init__( self, db_name ):
     TableAdapter.__init__( self, db_name, self.NAME )
     self.cursor.execute( '''
       CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
       (
-        itemid int,
-  	name text,
+	itemid int,
         timestamp int,
-	day text,
-	units int,
-	price int,
-	price_delta_1day int,
-	units_delta_1day int
+        day date,
+        units int,
+        price int,
+        price_delta_1day int,
+        units_delta_1day int,
+        PRIMARY KEY( itemid, timestamp )
       )
     ''' )
 
-class ItemSummaryTable( TableAdapter ):
 
-  NAME = "ITEM_SUMMARY"
+class ItemMasterTable( TableAdapter ):
+
+  NAME = "ITEM_MASTER"
 
   def __init__( self, db_name ):
     TableAdapter.__init__( self, db_name, self.NAME )
@@ -68,22 +85,15 @@ class ItemSummaryTable( TableAdapter ):
         itemid int,
         name text,
         members bit,
-        price_average float,
-	units_average float,
-	price_min int,
-	price_max int,
-	units_min int,
-	units_max int,
-	price_avg_abs_delta1day float,
-	units_avg_abs_delta1day float,
-	units_daily_buy_limit int
+	units_daily_buy_limit int,
+	PRIMARY KEY( itemid )
       )
     ''' )
     self.db.commit()
 
-class MyModelTable( TableAdapter ):
+class DataModelTable( TableAdapter ):
 
-  NAME = "MODEL"
+  NAME = "DATA_MODEL"
 
   def __init__( self, db_name ):
     TableAdapter.__init__( self, db_name, self.NAME )
@@ -91,14 +101,14 @@ class MyModelTable( TableAdapter ):
       CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
       ( 
         itemid int,
-        name text,
 	price_current int,
         price_plus int,
 	price_minus int,
 	price_crossed_average int,
 	price_min_diff int,
 	price_max_diff int,
-	price_potential float
+	price_potential float,
+	PRIMARY KEY( itemid )
       )
     ''' )
     self.db.commit()

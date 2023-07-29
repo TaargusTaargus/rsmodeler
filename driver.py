@@ -2,10 +2,11 @@
 from etl import extract, transform
 from sys import argv, exit
 
-if len( argv ) <> 2:
+if len( argv ) <> 3:
     print( "Incorrect Number of Arguments, Exitting ..." )
     exit( 0 )
 
 filename = argv[ 1 ]
-extract( filename )
+config = argv[ 2 ]
+extract( filename, config )
 transform( filename )

@@ -5,9 +5,9 @@
 set -e
 
 # get our python full path
-python=$(which python)
+pythonpath=$(which python)
 
 # get our database filename
 filename=$(date +%Y-%m-%d-%H:%M)
 
-$python driver.py "db/${filename}.db"
+$pythonpath /home/jack/rsmodeler/driver.py "/home/jack/rsmodeler/db/${filename}.db" "/home/jack/rsmodeler/configs/"

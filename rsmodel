@@ -1,9 +1,0 @@
-#!/usr/bin/python
-from datetime import datetime
-from etl import extract, transform
-
-today = datetime.now()
-timestamp = today.strftime( "%m-%d-%Y-%H:%M:%S" )
-
-extract( "db/item-" + timestamp   + ".db" )
-transform( "db/item-" + timestamp + ".db" )
