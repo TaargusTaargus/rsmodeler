@@ -80,8 +80,9 @@ def extract( db_path, config_path, request_timer=REQUEST_TIMER, alphabet=ALPHABE
 				
 					for el in sorted( graph_response[ "daily" ] ):
 						date = datetime.utcfromtimestamp( float( el ) / 1000 ).strftime( "%Y-%m-%d" )
+						datef = datetime.utcfromtimestamp( float( el ) / 1000 ).strftime( "%Y/%m/%d" )
 						p1 = int( graph_response[ "daily" ][ el ] )
-						u1 = int( count_response[ date ] ) if count_response and date and date in count_response else 0
+						u1 = int( count_response[ datef ] ) if count_response and datef and datef in count_response else 0
 						dp = p1 - p0 if p0 and p1 else None
 						du = u1 - u0 if u0 and u1 else None
 						item_daily_db.insert_dict( {
@@ -93,6 +94,7 @@ def extract( db_path, config_path, request_timer=REQUEST_TIMER, alphabet=ALPHABE
 							"price_delta_1day": dp,
 							"units_delta_1day": du
 						} )
+						print( u1 )
 						p0 = p1
 						u0 = u1
 
