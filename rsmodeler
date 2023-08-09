@@ -10,4 +10,4 @@ pythonpath=$(which python)
 # get our database filename
 filename=$(date +%Y-%m-%d-%H:%M)
 
-$pythonpath /home/jack/rsmodeler/driver.py "/home/jack/rsmodeler/db/${filename}.db" "/home/jack/rsmodeler/configs/"
+$pythonpath /home/jack/rsmodeler/driver.py "/home/jack/rsmodeler/db/${filename}.db"

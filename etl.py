@@ -1,23 +1,25 @@
+from constants import BUY_LIMITS, OSRS_API_ROUTES
+from datetime import datetime
+from db import DataModelTable, ItemDailyFactsTable, ItemMasterTable
 from os.path import sep
 from json import load as jload
 from time import sleep
-from utilities import column_names, load_dict_from_url, load_json_from_url, query_to_array, replace_keys
-from datetime import datetime
-from db import DataModelTable, ItemDailyFactsTable, ItemMasterTable
+from utilities import column_names, load_dict_from_text, load_html_from_url, load_json_from_url, query_to_array, replace_keys
+
 
 ALPHABET = "abcdefghijklmnopqrstuvwxyz"
-COUNT_KEY_REGEX = "trade180.*Date\('(.*)'\).*"
-COUNT_VAL_REGEX = "trade180.*\), (.*)]"
-LIMITS_FILE_PATH = "buy_limits"
-REQUEST_TIMER=3
-ROUTES_FILE_PATH = "routes"
+PRICE_KEY_REGEX = "average180.*Date\('(.*)'\).*"
+PRICE_VAL_REGEX = "average180.*\), (.*?),"
+UNITS_KEY_REGEX = "trade180.*Date\('(.*)'\).*"
+UNITS_VAL_REGEX = "trade180.*\), (.*)]"
+REQUEST_TIMER = 3
 
-def extract( db_path, config_path, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=True, verbose=True, max_page=-1 ):
+def extract( db_path, day=None, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=True, verbose=True, max_page=-1 ):
 
 	item_daily_db = ItemDailyFactsTable( db_path )
 	item_summary_db = ItemMasterTable( db_path )
 
-	API = jload( open( config_path + sep + ROUTES_FILE_PATH, 'rb' ) )
+	API = OSRS_API_ROUTES
 	catalog_template = API[ "endpoints" ][ "catalog" ][ "url" ]
 	catalog_keys = API[ "endpoints" ][ "catalog" ][ "keys" ]
 	catalog_keys = dict( zip( catalog_keys, [ None ] * len( catalog_keys ) ) )
@@ -34,7 +36,7 @@ def extract( db_path, config_path, request_timer=REQUEST_TIMER, alphabet=ALPHABE
 	count_keys = API[ "endpoints" ][ "count" ][ "keys" ]
 	count_keys = dict( zip( count_keys, [ None ] * len( count_keys ) ) )
 
-	limits = jload( open( config_path + sep + LIMITS_FILE_PATH, 'rb' ) )
+	limits = BUY_LIMITS
 
 	placeholders = API[ "placeholders" ]
 
@@ -44,6 +46,7 @@ def extract( db_path, config_path, request_timer=REQUEST_TIMER, alphabet=ALPHABE
 		catalog_keys[ "page" ] = 1	
 	
 		while max_page - catalog_keys[ "page" ] + 1:
+		
 			catalog = replace_keys( catalog_template, placeholders, catalog_keys )
 			catalog = load_json_from_url( catalog )
 
@@ -55,65 +58,54 @@ def extract( db_path, config_path, request_timer=REQUEST_TIMER, alphabet=ALPHABE
 				
 			for item in catalog[ "items" ]:
 
-				detail_keys[ "item" ] = item[ "id" ]
-				detail = replace_keys( detail_template, placeholders, detail_keys )
-				detail_response = load_json_from_url( detail )
-	
 				if not members and "true" in detail_response[ "item" ][ "members" ]: 
 					continue
 
 				if verbose:
 					print( "loading item: '" + str( item[ "name" ] ) + "' ( " + str( item[ "id" ] ) + " ) ..." )
 
-				graph_keys[ "item" ] = item[ "id" ]
-				graph = replace_keys( graph_template, placeholders, graph_keys )
-				graph_response = load_json_from_url( graph ) 
+				## loading and inserting item master data
+				detail_keys[ "item" ] = item[ "id" ]
+				detail = replace_keys( detail_template, placeholders, detail_keys )
+				detail_response = load_json_from_url( detail )
+				buy_limit = None
+				try:
+					buy_limit =  int( limits[ item[ "name" ] ] ) * 6 if item[ "name" ] in limits else None
+				except:
+					buy_limit = None
 
+				item_summary_db.insert_dict( {
+					"itemid": item[ "id" ],
+					"name": item[ "name" ],
+					"description": item[ "description" ],
+					"members": "true" in detail_response[ "item" ][ "members" ],
+					"units_daily_buy_limit": buy_limit
+				} )
+
+				## scraping price and unit data
 				count_keys[ "item" ] = item[ "id" ]
 				count_keys[ "alpha" ] = item[ "name" ].replace( " ", "+" )
 				count = replace_keys( count_template, placeholders, count_keys )
-				count_response = load_dict_from_url( COUNT_KEY_REGEX, COUNT_VAL_REGEX, count, headers = {'User-Agent':'Magic Browser'} )
+				count_response = load_html_from_url( count, headers = {'User-Agent':'Magic Browser'} )
+				price = load_dict_from_text( count_response, PRICE_KEY_REGEX, PRICE_VAL_REGEX )
+				units = load_dict_from_text( count_response, UNITS_KEY_REGEX, UNITS_VAL_REGEX )
 
-				if graph_response:
-
-					p0, u0 = None, None
 				
-					for el in sorted( graph_response[ "daily" ] ):
-						date = datetime.utcfromtimestamp( float( el ) / 1000 ).strftime( "%Y-%m-%d" )
-						datef = datetime.utcfromtimestamp( float( el ) / 1000 ).strftime( "%Y/%m/%d" )
-						p1 = int( graph_response[ "daily" ][ el ] )
-						u1 = int( count_response[ datef ] ) if count_response and datef and datef in count_response else 0
-						dp = p1 - p0 if p0 and p1 else None
-						du = u1 - u0 if u0 and u1 else None
-						item_daily_db.insert_dict( {
-							"itemid": item[ "id" ],
-							"timestamp": el,
-							"day": date,
-							"price": p1,
-							"units": u1,
-							"price_delta_1day": dp,
-							"units_delta_1day": du
-						} )
-						print( u1 )
-						p0 = p1
-						u0 = u1
 
-					buy_limit = None
-					try:
-						buy_limit =  int( limits[ item[ "name" ] ] ) * 6 if item[ "name" ] in limits else None
-					except:
-						buy_limit = None
-
-					item_summary_db.insert_dict( {
-						"itemid": item[ "id" ],
-						"name": item[ "name" ],
-						"members": "true" in detail_response[ "item" ][ "members" ],
-						"units_daily_buy_limit": buy_limit
-					} )
-					print( "successfully loaded item " + str( item[ "id" ] ) + " ..." )
+				for el in price:
+					date = datetime.strptime( el, "%Y/%m/%d" ).strftime( "%Y-%m-%d" )
 					
-				else:
-					print( "could not load graph on item: " + str( item[ 'id' ] ) )
+					if day and day != date:
+						continue
+					
+					item_daily_db.insert_dict( {
+						"itemid": item[ "id" ],
+						"day": date,
+						"price": price[ el ],
+						"units": units[ el ],
+					} )			
+					
+				print( "successfully loaded item " + str( item[ "id" ] ) + " ..." )
 
 				sleep( REQUEST_TIMER )
 	
@@ -135,7 +127,7 @@ def transform( db_name, verbose=True ):
 		if verbose:
 			print( "processing item " + str( item ) + " ..." )		
 
-		daily_info = by_item_daily.select( keys=[ "price", "price_delta_1day" ], where={ "itemid": item }, orderby=[ "timestamp" ] )[ 0 ]
+		daily_info = by_item_daily.select( keys=[ "price", "price_delta_1day" ], where={ "itemid": item }, orderby=[ "day" ] )[ 0 ]
 		item_info = by_item_daily.select( keys=[ "MIN( price ) as price_min", "MAX( price ) as price_max", "AVG( price ) as price_average" ], where={ "itemid": item }, groupby = ['itemid'] )
 
 		item_info = dict( zip( item_info[ 1 ], item_info[ 0 ][ 0 ] ) )

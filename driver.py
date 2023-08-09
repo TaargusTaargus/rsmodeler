@@ -1,12 +1,24 @@
 #!/usr/bin/python
+import argparse
+import datetime
 from etl import extract, transform
 from sys import argv, exit
 
-if len( argv ) <> 3:
-    print( "Incorrect Number of Arguments, Exitting ..." )
-    exit( 0 )
+def main():
+    parser = argparse.ArgumentParser( description='''Runescape API extract, load, and transform shell tool.''' )
 
-filename = argv[ 1 ]
-config = argv[ 2 ]
-extract( filename, config )
-transform( filename )
+    # Add command-line options
+    parser.add_argument( "database_name", help="Specify the name of an output database." )
+    parser.add_argument( "-d", "--day",  help="Request a particular day of history." )
+
+    # Parse the command-line arguments
+    args = parser.parse_args()
+
+    extract( args.database_name, day = args.day )
+    transform( args.database_name )
+
+if __name__ == "__main__":
+    main()
+
+
+

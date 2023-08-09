@@ -62,13 +62,10 @@ class ItemDailyFactsTable( TableAdapter ):
       CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
       (
 	itemid int,
-        timestamp int,
         day date,
         units int,
         price int,
-        price_delta_1day int,
-        units_delta_1day int,
-        PRIMARY KEY( itemid, timestamp )
+        PRIMARY KEY( itemid, day )
       )
     ''' )
 
@@ -84,6 +81,7 @@ class ItemMasterTable( TableAdapter ):
       ( 
         itemid int,
         name text,
+        description text,
         members bit,
 	units_daily_buy_limit int,
 	PRIMARY KEY( itemid )

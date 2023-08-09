@@ -40,7 +40,7 @@ def load_json_from_url( url, attempts=3, timeout=10, headers = None ):
 	
 	return load_json_from_url( url, attempts, timeout + 1 )
 
-def load_dict_from_url( regex_key, regex_val, url, attempts=3, timeout=10, headers = None ):
+def load_html_from_url( url, attempts=3, timeout=10, headers = None ):
 
 	if not attempts:
 		print( "was unable to load url: " + url )
@@ -59,22 +59,28 @@ def load_dict_from_url( regex_key, regex_val, url, attempts=3, timeout=10, heade
 		print( e )
 		print( "was unable to open url ( " + url + " ), trying again ..." )
 		sleep( timeout )
-		return load_dict_from_url( regex_key, regex_val, url, attempts, timeout + 1, headers )
+		return load_html_from_url( url, attempts, timeout + 1, headers )
 	
 	text = fp.read()
 	
 	if not text:
 		print( "received no text from response, trying again ..." )
 		sleep( timeout )
-		return load_dict_from_url( regex_key, regex_val, url, attempts, timeout + 1, headers )
+		return load_html_from_url( url, attempts, timeout + 1, headers )
+	
+	return text
+		
 
+def load_dict_from_text( text, regex_key, regex_val ):
 	try:
 		ret_dict = dict( zip( findall( regex_key, text ), findall( regex_val, text ) ) )
 		if ret_dict:
 			return ret_dict
 
 	except Exception as e:
+		print( e )
 		print( "error creating dictionary from given regexes, exitting ..." )
+
 
 
 def replace_keys( string, placeholders, keys ):
