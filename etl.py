@@ -43,7 +43,7 @@ def extract( db_path, day=None, request_timer=REQUEST_TIMER, alphabet=ALPHABET, 
 	for letter in alphabet:
 	
 		catalog_keys[ "alpha" ] = letter
-		catalog_keys[ "page" ] = 1	
+		catalog_keys[ "page" ] = 1
 	
 		while max_page - catalog_keys[ "page" ] + 1:
 		
@@ -90,7 +90,8 @@ def extract( db_path, day=None, request_timer=REQUEST_TIMER, alphabet=ALPHABET, 
 				price = load_dict_from_text( count_response, PRICE_KEY_REGEX, PRICE_VAL_REGEX )
 				units = load_dict_from_text( count_response, UNITS_KEY_REGEX, UNITS_VAL_REGEX )
 
-				
+				if not price:
+					continue
 
 				for el in price:
 					date = datetime.strptime( el, "%Y/%m/%d" ).strftime( "%Y-%m-%d" )
@@ -102,7 +103,7 @@ def extract( db_path, day=None, request_timer=REQUEST_TIMER, alphabet=ALPHABET, 
 						"itemid": item[ "id" ],
 						"day": date,
 						"price": price[ el ],
-						"units": units[ el ],
+						"units": units[ el ] if el in units else None,
 					} )			
 					
 				print( "successfully loaded item " + str( item[ "id" ] ) + " ..." )
