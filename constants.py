@@ -1,3 +1,14 @@
+ALPHABET_DEFAULT = "abcdefghijklmnopqrstuvwxyz"
+DAY_DEFAULT = None
+MAX_PAGE_DEFAULT = -1
+MEMBERS_DEFAULT = False
+PRICE_KEY_REGEX = "average180.*Date\('(.*)'\).*"
+PRICE_VAL_REGEX = "average180.*\), (.*?),"
+UNITS_KEY_REGEX = "trade180.*Date\('(.*)'\).*"
+UNITS_VAL_REGEX = "trade180.*\), (.*)]"
+REQUEST_TIMER_DEFAULT = 3
+VERBOSE_DEFAULT = False
+
 OSRS_API_ROUTES = {
   "base": "http://services.runescape.com/m=itemdb_oldschool",
   "endpoints": {

@@ -1,4 +1,4 @@
-from constants import BUY_LIMITS, OSRS_API_ROUTES
+from constants import ALPHABET_DEFAULT, BUY_LIMITS, DAY_DEFAULT, MAX_PAGE_DEFAULT, MEMBERS_DEFAULT, OSRS_API_ROUTES, PRICE_KEY_REGEX, PRICE_VAL_REGEX, REQUEST_TIMER_DEFAULT, UNITS_KEY_REGEX, UNITS_VAL_REGEX, VERBOSE_DEFAULT
 from datetime import datetime
 from db import DataModelTable, ItemDailyFactsTable, ItemMasterTable
 from os.path import sep
@@ -6,15 +6,7 @@ from json import load as jload
 from time import sleep
 from utilities import column_names, load_dict_from_text, load_html_from_url, load_json_from_url, query_to_array, replace_keys
 
-
-ALPHABET = "abcdefghijklmnopqrstuvwxyz"
-PRICE_KEY_REGEX = "average180.*Date\('(.*)'\).*"
-PRICE_VAL_REGEX = "average180.*\), (.*?),"
-UNITS_KEY_REGEX = "trade180.*Date\('(.*)'\).*"
-UNITS_VAL_REGEX = "trade180.*\), (.*)]"
-REQUEST_TIMER = 3
-
-def extract( db_path, day=None, request_timer=REQUEST_TIMER, alphabet=ALPHABET, members=True, verbose=True, max_page=-1 ):
+def extract( db_path, day=DAY_DEFAULT, request_timer=REQUEST_TIMER_DEFAULT, alphabet=ALPHABET_DEFAULT, members=MEMBERS_DEFAULT, verbose=VERBOSE_DEFAULT, max_page=MAX_PAGE_DEFAULT ):
 
 	item_daily_db = ItemDailyFactsTable( db_path )
 	item_summary_db = ItemMasterTable( db_path )
@@ -39,7 +31,7 @@ def extract( db_path, day=None, request_timer=REQUEST_TIMER, alphabet=ALPHABET, 
 	limits = BUY_LIMITS
 
 	placeholders = API[ "placeholders" ]
-
+	
 	for letter in alphabet:
 	
 		catalog_keys[ "alpha" ] = letter
@@ -58,16 +50,17 @@ def extract( db_path, day=None, request_timer=REQUEST_TIMER, alphabet=ALPHABET, 
 				
 			for item in catalog[ "items" ]:
 
-				if not members and "true" in detail_response[ "item" ][ "members" ]: 
+				## loading and inserting item master data
+				detail_keys[ "item" ] = item[ "id" ]
+				detail = replace_keys( detail_template, placeholders, detail_keys )
+				detail_response = load_json_from_url( detail )
+
+				if members and "true" in detail_response[ "item" ][ "members" ]: 
 					continue
 
 				if verbose:
 					print( "loading item: '" + str( item[ "name" ] ) + "' ( " + str( item[ "id" ] ) + " ) ..." )
 
-				## loading and inserting item master data
-				detail_keys[ "item" ] = item[ "id" ]
-				detail = replace_keys( detail_template, placeholders, detail_keys )
-				detail_response = load_json_from_url( detail )
 				buy_limit = None
 				try:
 					buy_limit =  int( limits[ item[ "name" ] ] ) * 6 if item[ "name" ] in limits else None
@@ -116,7 +109,7 @@ def extract( db_path, day=None, request_timer=REQUEST_TIMER, alphabet=ALPHABET, 
 					
 				print( "successfully loaded item " + str( item[ "id" ] ) + " ..." )
 
-				sleep( REQUEST_TIMER )
+				sleep( request_timer )
 	
 
 			catalog_keys[ "page" ] = catalog_keys[ "page" ] + 1
