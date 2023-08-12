@@ -90,10 +90,18 @@ def extract( db_path, day=None, request_timer=REQUEST_TIMER, alphabet=ALPHABET, 
 				price = load_dict_from_text( count_response, PRICE_KEY_REGEX, PRICE_VAL_REGEX )
 				units = load_dict_from_text( count_response, UNITS_KEY_REGEX, UNITS_VAL_REGEX )
 
-				if not price:
+				date_keys = set()
+			
+				if not price and not units:
 					continue
+				
+				if price:
+					date_keys = date_keys | set( price.keys() )
+				
+				if units:
+					date_keys = date_keys | set( units.keys() )
 
-				for el in price:
+				for el in date_keys:
 					date = datetime.strptime( el, "%Y/%m/%d" ).strftime( "%Y-%m-%d" )
 					
 					if day and day != date:
@@ -102,8 +110,8 @@ def extract( db_path, day=None, request_timer=REQUEST_TIMER, alphabet=ALPHABET, 
 					item_daily_db.insert_dict( {
 						"itemid": item[ "id" ],
 						"day": date,
-						"price": price[ el ],
-						"units": units[ el ] if el in units else None,
+						"price": price[ el ] if price and el in price else None,
+						"units": units[ el ] if units and el in units else None,
 					} )			
 					
 				print( "successfully loaded item " + str( item[ "id" ] ) + " ..." )
