@@ -99,13 +99,9 @@ class DataModelTable( TableAdapter ):
       CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
       ( 
         itemid int,
-	price_current int,
-        price_plus int,
-	price_minus int,
-	price_crossed_average int,
-	price_min_diff int,
-	price_max_diff int,
 	price_potential float,
+	volatility int,
+	score float,
 	PRIMARY KEY( itemid )
       )
     ''' )

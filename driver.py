@@ -27,7 +27,7 @@ def main():
     	, members = args.members if args.members else MEMBERS_DEFAULT
     	, verbose = args.verbose if args.verbose else VERBOSE_DEFAULT
     )
-    # transform( args.database_name )
+    transform( args.database_name )
 
 if __name__ == "__main__":
     main()

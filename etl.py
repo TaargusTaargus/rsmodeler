@@ -95,11 +95,12 @@ def extract( db_path, day=DAY_DEFAULT, request_timer=REQUEST_TIMER_DEFAULT, alph
 					date_keys = date_keys | set( units.keys() )
 
 				for el in date_keys:
-					date = datetime.strptime( el, "%Y/%m/%d" ).strftime( "%Y-%m-%d" )
 					
+					date = datetime.strptime( el, "%Y/%m/%d" ).strftime( "%Y-%m-%d" )
+
 					if day and day != date:
 						continue
-					
+
 					item_daily_db.insert_dict( {
 						"itemid": item[ "id" ],
 						"day": date,
@@ -117,43 +118,85 @@ def extract( db_path, day=DAY_DEFAULT, request_timer=REQUEST_TIMER_DEFAULT, alph
 	return True
 
 
-## i am un multi-coring this for now, will need to look back into making this multithreaded
-def transform( db_name, verbose=True ):
-	my_model = DataModelTable( db_name )
-	by_item_daily = ItemDailyFactsTable( db_name )
+def transform( db_path, verbose=True ):
+	data_model_table = DataModelTable( db_path )
+	data_model_table.cursor.execute( '''
+	-- get some simple statistical features
+	WITH CTE_FACTS_AGG AS 
+	(
+		SELECT
+			ITEMID
+			, MIN( PRICE ) AS MIN_PRICE
+			, MAX( PRICE ) AS MAX_PRICE
+			, AVG( PRICE ) AS AVG_PRICE
+			, AVG( UNITS ) AS AVG_UNITS
+			, MAX( DAY ) AS CURRENT_DAY
+		FROM ITEM_DAILY_FACTS
+		GROUP BY ITEMID
+	)
+	-- get an idea of volatility, in this case how many times an item is likely to cross its price average
+	-- gauranteed to be at least 1
+	/*, CTE_DELTAPRICE AS
+	(
+		SELECT 
+			P1.ITEMID
+			, P1.DAY
+			, COALESCE( P2.PRICE  - P1.PRICE, 0 ) AS DELTA_PRICE 
+		FROM ITEM_DAILY_FACTS P1 
+		INNER JOIN ITEM_DAILY_FACTS P2 
+			ON P1.ITEMID = P2.ITEMID 
+			AND DATE( P1.DAY, '+1 day' ) = P2.DAY
+	)*/
+	, CTE_CROSSED_AVERAGE AS
+	(
+		SELECT 
+			P1.ITEMID
+			, P1.DAY
+			, COALESCE( CASE WHEN P1.PRICE - AGG.AVG_PRICE < 0 THEN -1 ELSE 1 END, 0 ) AS CROSSED_AVERAGE
+		FROM ITEM_DAILY_FACTS P1 
+		INNER JOIN CTE_FACTS_AGG AGG
+			ON P1.ITEMID = AGG.ITEMID
+	)
+	, CTE_VOLATILITY AS
+	(
+		SELECT
+			ITEMID
+			, SUM( DELTA_CROSSED_AVERAGE ) AS VOLATILITY
+		FROM (
+			SELECT 
+				CA1.ITEMID
+				, CA1.DAY
+				, COALESCE( ABS( CA2.CROSSED_AVERAGE  - CA1.CROSSED_AVERAGE ), 0 ) AS DELTA_CROSSED_AVERAGE
+			FROM CTE_CROSSED_AVERAGE CA1
+			INNER JOIN CTE_CROSSED_AVERAGE CA2 
+				ON CA1.ITEMID = CA2.ITEMID 
+				AND DATE( CA1.DAY, '+1 day' ) = CA2.DAY
+		)
+		GROUP BY ITEMID
+	)
+	, CTE_CURRENT AS (
+		SELECT
+			f.ITEMID
+			, f.PRICE
+		FROM ITEM_DAILY_FACTS f
+		INNER JOIN CTE_FACTS_AGG a
+			ON f.ITEMID = a.ITEMID
+			AND f.DAY = a.CURRENT_DAY
+	)
+	INSERT INTO DATA_MODEL
+	SELECT
+		c.ITEMID
+		, (a.MAX_PRICE - c.PRICE) / CASE WHEN (c.PRICE - a.MIN_PRICE) = 0 THEN 1 ELSE (c.PRICE - a.MIN_PRICE) END AS PRICE_POTENTIAL
+		, v.VOLATILITY AS VOLATILITY
+		, (a.MAX_PRICE - c.PRICE) / CASE WHEN (c.PRICE - a.MIN_PRICE) = 0 THEN 1 ELSE (c.PRICE - a.MIN_PRICE) END 
+			* v.VOLATILITY
+			* a.AVG_UNITS AS SCORE
+	FROM CTE_CURRENT c 
+	INNER JOIN CTE_FACTS_AGG a
+		ON c.ITEMID = a.ITEMID
+	INNER JOIN CTE_VOLATILITY v
+		ON c.ITEMID = v.ITEMID
 
-	for item in by_item_daily.select( keys=["itemid"], distinct=True )[ 0 ]:
-		
-		item = item[ 0 ]
-	
-		if verbose:
-			print( "processing item " + str( item ) + " ..." )		
-
-		daily_info = by_item_daily.select( keys=[ "price", "price_delta_1day" ], where={ "itemid": item }, orderby=[ "day" ] )[ 0 ]
-		item_info = by_item_daily.select( keys=[ "MIN( price ) as price_min", "MAX( price ) as price_max", "AVG( price ) as price_average" ], where={ "itemid": item }, groupby = ['itemid'] )
-
-		item_info = dict( zip( item_info[ 1 ], item_info[ 0 ][ 0 ] ) )
-
-		price_info, delta_price_1day = zip( *daily_info )
-		plus = [ ( 1 if e > 0  else 0 ) for e in delta_price_1day ]
-		minus = [ ( 1 if e < 0 else 0 ) for e in delta_price_1day ]
-		price_average = item_info[ 'price_average' ]
-		price_crossed_average = sum( [ ( 1 if dp and min( [ p, p + dp ] ) <= price_average and price_average <= max( [ p, p + dp ] ) else 0 ) for p, dp in zip( price_info, delta_price_1day ) ] )
-		price_current = price_info[ -1 ]
-		price_min_diff = 1 if price_current == item_info[ 'price_min' ] else price_current - item_info[ 'price_min' ]
-		price_max_diff = item_info[ 'price_max' ] - price_current
-
-		my_model.insert_dict( {
-			"itemid": item,
-			"price_current": price_current,
-			"price_plus": sum( plus ),
-			"price_minus": sum( minus ),
-			"price_crossed_average": price_crossed_average,
-			"price_min_diff": price_min_diff,
-			"price_max_diff": price_max_diff,
-			"price_potential": price_max_diff * price_crossed_average / price_min_diff
-		} )	
-		
-
+	''' )
 	return True 
 

@@ -1,2 +1,0 @@
-#!/bin/bash
-echo {$(curl 'http://oldschoolrunescape.wikia.com/wiki/Grand_Exchange/Buying_limits' 2>&1 /dev/null | grep '<td>.*' | sed 's/,//g' | sed 's/<a.*>\(.*\)<\/a>/\1/g' | sed 's/<\/td><td>\(.*\)/\"\1\",/g' | sed 's/<td>\(.*\)/\"\1\":/g' | tr ':\n' ': ')} | sed 's/, }/}/g' | sed 's/,/,\n/g' > configs/buy_limits
