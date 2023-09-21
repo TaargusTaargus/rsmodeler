@@ -2,7 +2,7 @@
 import argparse
 from constants import ALPHABET_DEFAULT, DAY_DEFAULT, MAX_PAGE_DEFAULT, MEMBERS_DEFAULT, REQUEST_TIMER_DEFAULT, VERBOSE_DEFAULT
 import datetime
-from etl import extract, transform
+from etl import RSModelerETL
 from sys import argv, exit
 
 def main():
@@ -18,16 +18,19 @@ def main():
 
     # Parse the command-line arguments
     args = parser.parse_args()
-    
-    extract( 
-    	args.database_name
-        , alphabet = args.alpha if args.alpha else ALPHABET_DEFAULT
-    	, day = args.day if args.day else DAY_DEFAULT
-    	, max_page = int( args.pages ) if args.pages else MAX_PAGE_DEFAULT
-    	, members = args.members if args.members else MEMBERS_DEFAULT
-    	, verbose = args.verbose if args.verbose else VERBOSE_DEFAULT
-    )
-    transform( args.database_name )
+   
+    # Create options dictionary
+    options = {
+    	"ALPHABET": args.alpha if args.alpha else ALPHABET_DEFAULT
+    	, "DAY": args.day if args.day else DAY_DEFAULT
+    	, "MAX_PAGE": int( args.pages ) if args.pages else MAX_PAGE_DEFAULT
+    	, "MEMBERS": args.members if args.members else MEMBERS_DEFAULT
+    	, "VERBOSE": args.verbose if args.verbose else VERBOSE_DEFAULT
+    }
+
+    # Create an ETL object
+    etl = RSModelerETL( args.database_name, options )
+    etl.execute()
 
 if __name__ == "__main__":
     main()

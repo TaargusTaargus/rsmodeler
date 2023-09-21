@@ -2,9 +2,8 @@ from sqlite3 import connect
 
 class TableAdapter:
 
-  def __init__( self, db_name, table_name ):
-    self.db = connect( db_name )
-    self.db_name = db_name
+  def __init__( self, db, table_name ):
+    self.db = db
     self.cursor = self.db.cursor()
     self.table_name = table_name
 
@@ -54,10 +53,11 @@ class TableAdapter:
            )
 
 class ItemDailyFactsTable( TableAdapter ):
+
   NAME ="ITEM_DAILY_FACTS"
 
-  def __init__( self, db_name ):
-    TableAdapter.__init__( self, db_name, self.NAME )
+  def __init__( self, db ):
+    TableAdapter.__init__( self, db, self.NAME )
     self.cursor.execute( '''
       CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
       (
@@ -74,8 +74,8 @@ class ItemMasterTable( TableAdapter ):
 
   NAME = "ITEM_MASTER"
 
-  def __init__( self, db_name ):
-    TableAdapter.__init__( self, db_name, self.NAME )
+  def __init__( self, db):
+    TableAdapter.__init__( self, db, self.NAME )
     self.cursor.execute( '''
       CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
       ( 
@@ -93,8 +93,8 @@ class DataModelTable( TableAdapter ):
 
   NAME = "DATA_MODEL"
 
-  def __init__( self, db_name ):
-    TableAdapter.__init__( self, db_name, self.NAME )
+  def __init__( self, db ):
+    TableAdapter.__init__( self, db, self.NAME )
     self.cursor.execute( '''
       CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
       ( 
@@ -102,6 +102,7 @@ class DataModelTable( TableAdapter ):
 	price_potential float,
 	volatility int,
 	score float,
+	score_rank int,
 	PRIMARY KEY( itemid )
       )
     ''' )
