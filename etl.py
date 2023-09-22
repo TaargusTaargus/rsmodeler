@@ -118,7 +118,7 @@ class RSModelerETL:
 					
 					if self.options[ 'VERBOSE' ]:
 						print( "successfully loaded item " + str( item[ "id" ] ) + " ..." )
-					return True
+
 					sleep( self.options[ 'REQUEST_TIMER' ] )
 		
 
