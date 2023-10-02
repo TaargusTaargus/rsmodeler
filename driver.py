@@ -15,6 +15,7 @@ def main():
     parser.add_argument( "-p", "--pages", help="Request a limit on pages returned from API (ex: 1) -- defaults to as many as are available." )
     parser.add_argument( "-m", "--members", action="store_true", help="Flag to request to return only members items -- defaults to FALSE." )
     parser.add_argument( "-v", "--verbose", action="store_true", help="Flag to request verbose output -- defaults to FALSE." )
+    parser.add_argument( "-t", "--timer", help="Specify the request timer on call to OSRS API, API will reject calls that are too fast in succession -- defaults to 3 seconds" )
 
     # Parse the command-line arguments
     args = parser.parse_args()
@@ -26,6 +27,7 @@ def main():
     	, "MAX_PAGE": int( args.pages ) if args.pages else MAX_PAGE_DEFAULT
     	, "MEMBERS": args.members if args.members else MEMBERS_DEFAULT
     	, "VERBOSE": args.verbose if args.verbose else VERBOSE_DEFAULT
+    	, "REQUEST_TIMER": args.verbose if args.timer else VERBOSE_DEFAULT
     }
 
     # Create an ETL object
