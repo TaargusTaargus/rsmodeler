@@ -63,6 +63,9 @@ class RSModelerETL:
 					detail = replace_keys( detail_template, placeholders, detail_keys )
 					detail_response = load_json_from_url( detail )
 
+					if not detail_response:
+						continue					
+
 					if self.options[ 'MEMBERS' ] and "true" in detail_response[ "item" ][ "members" ]: 
 						continue
 
@@ -88,6 +91,10 @@ class RSModelerETL:
 					count_keys[ "alpha" ] = item[ "name" ].replace( " ", "+" )
 					count = replace_keys( count_template, placeholders, count_keys )
 					count_response = load_html_from_url( count, headers = {'User-Agent':'Magic Browser'} )
+					
+					if not count_response:
+						continue
+						
 					price = load_dict_from_text( count_response, PRICE_KEY_REGEX, PRICE_VAL_REGEX )
 					units = load_dict_from_text( count_response, UNITS_KEY_REGEX, UNITS_VAL_REGEX )
 
