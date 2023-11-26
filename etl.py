@@ -43,15 +43,17 @@ class RSModelerETL:
 		for letter in self.options[ 'ALPHABET' ]:
 		
 			catalog_keys[ "alpha" ] = letter
-			catalog_keys[ "page" ] = 1
+			catalog_keys[ "page" ] = self.options[ 'START_PAGE' ]
 		
-			while self.options[ 'MAX_PAGE' ] - catalog_keys[ "page" ] + 1:
+			while self.options[ 'END_PAGE' ] - catalog_keys[ "page" ] + 1:
 			
 				catalog = replace_keys( catalog_template, placeholders, catalog_keys )
 				catalog = load_json_from_url( catalog )
 
-				if self.options[ 'VERBOSE' ]:
+				if self.options[ 'VERBOSE' ] == 1:
 					print( "catalog letter: " + catalog_keys[ "alpha" ]  +  ", page: " + str( catalog_keys[ "page" ] ) )
+				elif self.options[ 'VERBOSE' ] > 1:
+					print( "catalog items (letter: '" + catalog_keys[ "alpha" ] + "', page: " + str(catalog_keys[ "page" ]) + "):\n- " + "\n- ".join( [ e[ 'name' ] for e in catalog[ "items" ] ] ) )
 
 				if not catalog or not len( catalog[ "items" ] ):
 					break

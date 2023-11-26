@@ -10,5 +10,5 @@ pythonpath=$(which python)
 # get our database filename
 date_value=$(date +%Y-%m-%d)
 
-#$pythonpath /home/jack/rsmodeler/driver.py --verbose --day "${date_value}" "/home/jack/rsmodeler/db/rsmodeler.db"
-$pythonpath /home/jack/rsmodeler/driver.py --verbose "/home/jack/rsmodeler/db/rsmodeler.db"
+$pythonpath /home/jack/rsmodeler/driver.py --verbose 1 --day "${date_value}" "/home/jack/rsmodeler/db/rsmodeler.db"
+#pythonpath /home/jack/rsmodeler/driver.py --verbose 1 "/home/jack/rsmodeler/db/rsmodeler.db"
