@@ -1,11 +1,82 @@
+from bs4 import BeautifulSoup
 from constants import BUY_LIMITS, OPTIONS_DEFAULT, OSRS_API_ROUTES, PRICE_KEY_REGEX, PRICE_VAL_REGEX, UNITS_KEY_REGEX, UNITS_VAL_REGEX
 from datetime import datetime
-from db import DataModelTable, ItemDailyFactsTable, ItemMasterTable
+from db import DataModelTable, ItemDailyFactsTable, ItemMasterTable, ItemMaterialsTable
 from os.path import sep
 from json import load as jload
 from sqlite3 import connect
 from time import sleep
 from utilities import column_names, load_dict_from_text, load_html_from_url, load_json_from_url, query_to_array, replace_keys
+import re, requests
+
+class OsrsWikiScraper:
+
+	def get_high_alch_information( self, html_content ):
+
+		LOW_ALCH_PATTERN = r'Low alch.*?(\d*) coins'
+		HIGH_ALCH_PATTERN = r'High alch.*?(\d*) coins'
+		print( re.findall( LOW_ALCH_PATTERN, html_content ) )
+		print( re.findall( HIGH_ALCH_PATTERN, html_content ) )
+
+
+	def get_material_relationships( self, html_content ):
+
+		# Parse the HTML content with Beautiful Soup
+		soup = BeautifulSoup( html_content, 'html.parser' )
+	    
+		# Find the table element(s) on the page
+		tables = soup.find_all( 'table' )
+	    
+		# Loop through the tables (if there are multiple)
+		for table in tables:
+	    
+			caption = table.find( 'caption' )
+			    
+			## we only care about the Materials table
+			if not caption or caption.text.strip() != 'Materials':
+				continue
+		    
+		    
+			## since this is the Materials table -- loop through the rows
+			materials = []
+			for row in table.find_all( 'tr' ):
+		       
+				## Get all column values
+				columns = row.find_all( 'td' )  # Change 'td' to 'th' if you want to include header cells
+			    
+				if len( columns ) > 2:
+					try:
+						materials.append( ( columns[ 1 ].text.strip(), int( columns[ 2 ].text.strip().replace( ",", "" ) ) ) )
+					except ValueError as e:
+						continue
+		
+			if materials:
+				n_produced = materials[ -1 ][ 1 ]
+				return [ ( e, n / n_produced ) for e, n in materials[ : -1 ] ]
+
+
+	def retrieve_item_osrs_wiki( self, item_name ):
+
+		# Define the URL of the website you want to scrape
+		url = 'https://oldschool.runescape.wiki/w/' + item_name
+
+		# Send an HTTP GET request to the URL and retrieve the page content
+		response = requests.get( url )
+
+		# Check if the request was successful
+		if response.status_code == 200:
+
+			# Extract text from the HTML content
+			html_content = response.content.decode( "cp1252", "ignore" )
+			return html_content
+		
+		else:
+			print( "Failed to retrieve the web page. Status code: " + response.status_code )
+			return None
+
+
+	
+
 
 class RSModelerETL:
 
@@ -13,135 +84,195 @@ class RSModelerETL:
 		self.db_path = db_path
 		self.options = options
 		self.tmp_db = connect( ":memory:" )
-
-	def __extract__( self ):
-
-		item_daily_db = ItemDailyFactsTable( self.tmp_db )
-		item_summary_db = ItemMasterTable( self.tmp_db )
-
+		
+		## setting up table connections in db
+		self.data_model_table = DataModelTable( self.tmp_db )
+		self.item_daily_fact_table = ItemDailyFactsTable( self.tmp_db )
+		self.item_master_table = ItemMasterTable( self.tmp_db )
+		self.item_materials_table = ItemMaterialsTable( self.tmp_db )
+		
+		## setting up API routing
 		API = OSRS_API_ROUTES
-		catalog_template = API[ "endpoints" ][ "catalog" ][ "url" ]
+		self.catalog_template = API[ "endpoints" ][ "catalog" ][ "url" ]
 		catalog_keys = API[ "endpoints" ][ "catalog" ][ "keys" ]
-		catalog_keys = dict( zip( catalog_keys, [ None ] * len( catalog_keys ) ) )
+		self.catalog_keys = dict( zip( catalog_keys, [ None ] * len( catalog_keys ) ) )
 
-		detail_template = API[ "endpoints" ][ "detail" ][ "url" ]
+		self.detail_template = API[ "endpoints" ][ "detail" ][ "url" ]
 		detail_keys = API[ "endpoints" ][ "detail" ][ "keys" ]
-		detail_keys = dict( zip( detail_keys, [ None ] * len( detail_keys ) ) )
+		self.detail_keys = dict( zip( detail_keys, [ None ] * len( detail_keys ) ) )
 
-		graph_template = API[ "endpoints" ][ "graph" ][ "url" ]
+		self.graph_template = API[ "endpoints" ][ "graph" ][ "url" ]
 		graph_keys = API[ "endpoints" ][ "graph" ][ "keys" ]
-		graph_keys = dict( zip( graph_keys, [ None ] * len( graph_keys ) ) )
+		self.graph_keys = dict( zip( graph_keys, [ None ] * len( graph_keys ) ) )
 
-		count_template = API[ "endpoints" ][ "count" ][ "url" ]
+		self.count_template = API[ "endpoints" ][ "count" ][ "url" ]
 		count_keys = API[ "endpoints" ][ "count" ][ "keys" ]
-		count_keys = dict( zip( count_keys, [ None ] * len( count_keys ) ) )
+		self.count_keys = dict( zip( count_keys, [ None ] * len( count_keys ) ) )
+		
+		self.placeholders = API[ 'placeholders' ]
 
-		limits = BUY_LIMITS
+ 
 
-		placeholders = API[ "placeholders" ]
-		
-		for letter in self.options[ 'ALPHABET' ]:
-		
-			catalog_keys[ "alpha" ] = letter
-			catalog_keys[ "page" ] = self.options[ 'START_PAGE' ]
-		
-			while self.options[ 'END_PAGE' ] - catalog_keys[ "page" ] + 1:
+	def __extract_item__( self, itemid ):
+	
+		## loading and inserting item master data
+		item_entry = None
+		self.detail_keys[ "item" ] = itemid
+		detail = replace_keys( self.detail_template, self.placeholders, self.detail_keys )
+		detail_response = load_json_from_url( detail )
+
+		if self.options[ 'verbose' ] > 1:
+			print( "detail url: " + detail )
+
+		if not detail_response or ( self.options[ 'members' ] and "true" in detail_response[ "item" ][ "members" ] ): 
+			return item_entry
+
+		if self.options[ 'verbose' ]:
+			print( "loading item: '" + str( detail_response[ "item" ][ "name" ] ) + "' ( " + str( itemid ) + " ) ..." )
+
+		buy_limit = None
+		try:
+			buy_limit =  int( BUY_LIMITS[ detail_response[ "item" ][ "name" ] ] ) * 6 if detail_response[ "item" ][ "name" ] in BUY_LIMITS else None
+		except:
+			buy_limit = None
+
+		item_entry = {
+			"itemid": itemid,
+			"name": detail_response[ "item" ][ "name" ],
+			"description": detail_response[ "item" ][ "description" ],
+			"members": "true" in detail_response[ "item" ][ "members" ],
+			"units_daily_buy_limit": buy_limit
+		}
+
+		self.item_master_table.insert_dict( item_entry )
+	
+		## scraping price and unit data
+		self.count_keys[ "item" ] = itemid
+		self.count_keys[ "alpha" ] = detail_response[ "item" ][ "name" ].replace( " ", "+" )
+		count = replace_keys( self.count_template, self.placeholders, self.count_keys )
+		count_response = load_html_from_url( count, headers = {'User-Agent':'Magic Browser'} )
 			
-				catalog = replace_keys( catalog_template, placeholders, catalog_keys )
+		if not count_response:
+			return item_entry
+			
+		price = load_dict_from_text( count_response, PRICE_KEY_REGEX, PRICE_VAL_REGEX )
+		units = load_dict_from_text( count_response, UNITS_KEY_REGEX, UNITS_VAL_REGEX )
+
+		date_keys = set()
+		
+		if not price and not units:
+			return item_entry
+				
+		if price:
+			date_keys = date_keys | set( price.keys() )
+				
+		if units:
+			date_keys = date_keys | set( units.keys() )
+
+		for el in date_keys:
+						
+			date = datetime.strptime( el, "%Y/%m/%d" ).strftime( "%Y-%m-%d" )
+
+			if self.options[ 'day' ] and self.options[ 'day' ] != date:
+				return item_entry
+
+			self.item_daily_fact_table.insert_dict( {
+				"itemid": itemid,
+				"day": date,
+				"price": price[ el ] if price and el in price else None,
+				"units": units[ el ] if units and el in units else None,
+			} )			
+					
+		if self.options[ 'verbose' ]:
+			print( "successfully loaded item " + str( itemid ) + " ..." )
+			
+		return item_entry
+		
+
+		
+	def __extract_item_catalog__( self ):
+	
+		## extract itemids from current catalog
+		items = []
+		
+		if self.options[ 'verbose' ]:
+			print( "collecting items from osrs catalog..." )
+		
+		for letter in self.options[ 'alpha' ]:
+		
+			self.catalog_keys[ "alpha" ] = letter
+			self.catalog_keys[ "page" ] = self.options[ 'start' ]
+		
+			while self.options[ 'end' ] - self.catalog_keys[ "page" ] + 1:
+			
+				catalog = replace_keys( self.catalog_template, self.placeholders, self.catalog_keys )
+				
+				if self.options[ 'verbose' ] > 1:
+					print( "catalog url: " + catalog )
+				
 				catalog = load_json_from_url( catalog )
 
-				if self.options[ 'VERBOSE' ] == 1:
-					print( "catalog letter: " + catalog_keys[ "alpha" ]  +  ", page: " + str( catalog_keys[ "page" ] ) )
-				elif self.options[ 'VERBOSE' ] > 1:
-					print( "catalog items (letter: '" + catalog_keys[ "alpha" ] + "', page: " + str(catalog_keys[ "page" ]) + "):\n- " + "\n- ".join( [ e[ 'name' ] for e in catalog[ "items" ] ] ) )
+				if self.options[ 'verbose' ] == 1:
+					print( "catalog letter: " + self.catalog_keys[ "alpha" ]  +  ", page: " + str( self.catalog_keys[ "page" ] ) )
+				elif self.options[ 'verbose' ] > 1:
+					print( "catalog items (letter: '" + self.catalog_keys[ "alpha" ] + "', page: " + str( self.catalog_keys[ "page" ] ) + "):\n- " + "\n- ".join( [ e[ 'name' ] for e in catalog[ "items" ] ] ) )
 
 				if not catalog or not len( catalog[ "items" ] ):
 					break
 					
-				for item in catalog[ "items" ]:
-
-					## loading and inserting item master data
-					detail_keys[ "item" ] = item[ "id" ]
-					detail = replace_keys( detail_template, placeholders, detail_keys )
-					detail_response = load_json_from_url( detail )
-
-					if not detail_response:
-						continue					
-
-					if self.options[ 'MEMBERS' ] and "true" in detail_response[ "item" ][ "members" ]: 
-						continue
-
-					if self.options[ 'VERBOSE' ]:
-						print( "loading item: '" + str( item[ "name" ] ) + "' ( " + str( item[ "id" ] ) + " ) ..." )
-
-					buy_limit = None
-					try:
-						buy_limit =  int( limits[ item[ "name" ] ] ) * 6 if item[ "name" ] in limits else None
-					except:
-						buy_limit = None
-
-					item_summary_db.insert_dict( {
-						"itemid": item[ "id" ],
-						"name": item[ "name" ],
-						"description": item[ "description" ],
-						"members": "true" in detail_response[ "item" ][ "members" ],
-						"units_daily_buy_limit": buy_limit
-					} )
-
-					## scraping price and unit data
-					count_keys[ "item" ] = item[ "id" ]
-					count_keys[ "alpha" ] = item[ "name" ].replace( " ", "+" )
-					count = replace_keys( count_template, placeholders, count_keys )
-					count_response = load_html_from_url( count, headers = {'User-Agent':'Magic Browser'} )
-					
-					if not count_response:
-						continue
-						
-					price = load_dict_from_text( count_response, PRICE_KEY_REGEX, PRICE_VAL_REGEX )
-					units = load_dict_from_text( count_response, UNITS_KEY_REGEX, UNITS_VAL_REGEX )
-
-					date_keys = set()
+				items.extend( [ ( e[ "id" ], e[ "name" ] ) for e in catalog[ "items" ] ] )
 				
-					if not price and not units:
-						continue
-					
-					if price:
-						date_keys = date_keys | set( price.keys() )
-					
-					if units:
-						date_keys = date_keys | set( units.keys() )
+				self.catalog_keys[ "page" ] = self.catalog_keys[ "page" ] + 1
 
-					for el in date_keys:
-						
-						date = datetime.strptime( el, "%Y/%m/%d" ).strftime( "%Y-%m-%d" )
+		return items
 
-						if self.options[ 'DAY' ] and self.options[ 'DAY' ] != date:
-							continue
 
-						item_daily_db.insert_dict( {
-							"itemid": item[ "id" ],
-							"day": date,
-							"price": price[ el ] if price and el in price else None,
-							"units": units[ el ] if units and el in units else None,
-						} )			
-					
-					if self.options[ 'VERBOSE' ]:
-						print( "successfully loaded item " + str( item[ "id" ] ) + " ..." )
 
-					sleep( self.options[ 'REQUEST_TIMER' ] )
+	def __extract__( self ):
 		
+		## establish catalog ids from query
+		items = self.__extract_item_catalog__()
+		ids = [ e[ 0 ] for e in items ]
+		names = [ e[ 1 ] for e in items ]
+		
+		## extract item details
+		for itemid, name in items:
+		
+			entry = self.__extract_item__( itemid )
+	 		 
+		 	## resolve material relationships if requested
+			if self.options[ 'materials' ]:
 
-				catalog_keys[ "page" ] = catalog_keys[ "page" ] + 1
-	 
+		 		scraper = OsrsWikiScraper()
+		 		
+		 		if self.options[ 'verbose' ]:
+		 			print( 'checking material relationships for ' + name + ' ...' )
+		 		
+		 		formatted_item_string = name.replace( " ", "_" ).replace( "'", "%27" )
+		 		content = scraper.retrieve_item_osrs_wiki( formatted_item_string )
+		 		materials = scraper.get_material_relationships( content )
+		 		
+		 		if materials:
+		 			
+		 			for material, quantity in materials:
+					
+					    if material in names:
+					    	self.item_materials_table.insert_dict( {
+					    		'parent_itemid': itemid
+					    		, 'child_itemid': ids[ names.index( material ) ]
+					    		, 'n_required': quantity
+					    	} )
+
+			sleep( self.options[ 'timer' ] )
+	 	
 		return True
 
 
 	def __transform__( self ):
-		data_model_table = DataModelTable( self.tmp_db )
-		data_model_table.cursor.execute( '''
+		self.data_model_table.cursor.execute( '''
 			-- get some simple statistical features
 			WITH CTE_FACTS_AGG AS 
-			(
+			( 
 				SELECT
 					ITEMID
 					, MIN( PRICE ) AS MIN_PRICE
@@ -152,19 +283,6 @@ class RSModelerETL:
 				FROM ITEM_DAILY_FACTS
 				GROUP BY ITEMID
 			)
-			-- get an idea of volatility, in this case how many times an item is likely to cross its price average
-			-- gauranteed to be at least 1
-			/*, CTE_DELTAPRICE AS
-			(
-				SELECT 
-					P1.ITEMID
-					, P1.DAY
-					, COALESCE( P2.PRICE  - P1.PRICE, 0 ) AS DELTA_PRICE 
-				FROM ITEM_DAILY_FACTS P1 
-				INNER JOIN ITEM_DAILY_FACTS P2 
-					ON P1.ITEMID = P2.ITEMID 
-					AND DATE( P1.DAY, '+1 day' ) = P2.DAY
-			)*/
 			, CTE_CROSSED_AVERAGE AS
 			(
 				SELECT 
@@ -231,6 +349,7 @@ class RSModelerETL:
 		# Ensure tables exist
 		ItemDailyFactsTable( dest_conn )
 		ItemMasterTable( dest_conn )
+		ItemMaterialsTable( dest_conn )
 		DataModelTable( dest_conn )
 
 		# Attach the destination database
@@ -241,7 +360,7 @@ class RSModelerETL:
 		dest_cursor = dest_conn.cursor()
 
 		# Copy data from the source table to the destination table
-		for table in [ ItemDailyFactsTable.NAME, ItemMasterTable.NAME, DataModelTable.NAME ]:
+		for table in [ ItemDailyFactsTable.NAME, ItemMasterTable.NAME, ItemMaterialsTable.NAME, DataModelTable.NAME ]:
 			source_cursor.execute( "SELECT * FROM " + table ) 
 			data_to_copy = source_cursor.fetchall()
 			
@@ -263,13 +382,14 @@ class RSModelerETL:
 
 	def execute( self ):
 	
-		try:
-			self.__extract__()
-		except Exception as e:
-			print( "Ran into an issue during extract process." )
-			print( e )
-			return False
+		if self.options[ 'verbose' ]:
+			print( "beginning extract..." )
+			
 
+		self.__extract__()
+
+		if self.options[ 'verbose' ]:
+			print( "beginning transform..." )
 		
 		try:
 			self.__transform__()
@@ -277,6 +397,9 @@ class RSModelerETL:
 			print( "Ran into an issue during transform process." )
 			print( e )
 			return False
+			
+		if self.options[ 'verbose' ]:
+			print( "beginning load..." )
 			
 		try:
 			self.__load__()

@@ -1,5 +1,5 @@
 from json import loads
-from urllib2 import Request, urlopen
+from urllib.request import Request, urlopen
 from time import sleep
 from re import findall
 
@@ -31,7 +31,7 @@ def load_json_from_url( url, attempts=3, timeout=10, headers = None ):
 		return load_json_from_url( url, attempts, timeout + 1, headers )
 
 	try:
-		json = loads( fp.read() )
+		json = loads( fp.read().decode( 'utf-8' ) )
 		if json:
 			return json
 	except:
@@ -61,13 +61,13 @@ def load_html_from_url( url, attempts=3, timeout=10, headers = None ):
 		sleep( timeout )
 		return load_html_from_url( url, attempts, timeout + 1, headers )
 	
-	text = fp.read()
+	text = fp.read().decode( 'utf-8' )
 	
 	if not text:
 		print( "received no text from response, trying again ..." )
 		sleep( timeout )
 		return load_html_from_url( url, attempts, timeout + 1, headers )
-	
+			
 	return text
 		
 

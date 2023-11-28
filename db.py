@@ -12,7 +12,7 @@ class TableAdapter:
     placeholders = ', '.join( [ '?' ] * len( dict ) )
     columns = ', '.join( dict.keys() )
     sql = "REPLACE INTO %s ( %s ) VALUES ( %s )" % ( self.table_name, columns, placeholders )
-    self.cursor.execute( sql, dict.values() )
+    self.cursor.execute( sql, tuple( dict.values() ) )
     self.db.commit()
 
 
@@ -108,4 +108,20 @@ class DataModelTable( TableAdapter ):
     ''' )
     self.db.commit()
 
+class ItemMaterialsTable( TableAdapter ):
+
+  NAME = "ITEM_MATERIALS"
+
+  def __init__( self, db ):
+    TableAdapter.__init__( self, db, self.NAME )
+    self.cursor.execute( '''
+      CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
+      ( 
+        parent_itemid int,
+        child_itemid int,
+        n_required float,
+        PRIMARY KEY( parent_itemid, child_itemid )
+      )
+    ''' )
+    self.db.commit()
 
