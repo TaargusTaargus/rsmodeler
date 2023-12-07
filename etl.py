@@ -13,10 +13,15 @@ class OsrsWikiScraper:
 
 	def get_high_alch_information( self, html_content ):
 
-		LOW_ALCH_PATTERN = r'Low alch.*?(\d*) coins'
-		HIGH_ALCH_PATTERN = r'High alch.*?(\d*) coins'
-		print( re.findall( LOW_ALCH_PATTERN, html_content ) )
-		print( re.findall( HIGH_ALCH_PATTERN, html_content ) )
+		LOW_ALCH_PATTERN = r'Low alch.*?(\d+,\d+)* coins'
+		HIGH_ALCH_PATTERN = r'High alch.*?(\d+,\d+)* coins'
+		
+		try: 
+			high = int( re.findall( LOW_ALCH_PATTERN, html_content )[ 0 ].replace( ",", "" ) )
+			low = int( re.findall( HIGH_ALCH_PATTERN, html_content )[ 0 ].replace( ",", "" ) )
+			return low, high
+		except:
+			return None, None
 
 
 	def get_material_relationships( self, html_content ):
@@ -71,7 +76,7 @@ class OsrsWikiScraper:
 			return html_content
 		
 		else:
-			print( "Failed to retrieve the web page. Status code: " + response.status_code )
+			print( "Failed to retrieve the web page. Status code: " + str(response.status_code) )
 			return None
 
 
@@ -81,6 +86,7 @@ class OsrsWikiScraper:
 class RSModelerETL:
 
 	def __init__( self, db_path, options = OPTIONS_DEFAULT ):
+		## setting up database information
 		self.db_path = db_path
 		self.options = options
 		self.tmp_db = connect( ":memory:" )
@@ -90,6 +96,9 @@ class RSModelerETL:
 		self.item_daily_fact_table = ItemDailyFactsTable( self.tmp_db )
 		self.item_master_table = ItemMasterTable( self.tmp_db )
 		self.item_materials_table = ItemMaterialsTable( self.tmp_db )
+		
+		## state variables
+		self.catalog = []
 		
 		## setting up API routing
 		API = OSRS_API_ROUTES
@@ -111,12 +120,12 @@ class RSModelerETL:
 		
 		self.placeholders = API[ 'placeholders' ]
 
- 
 
-	def __extract_item__( self, itemid ):
-	
+	def __extract_item_details__( self, itemid ):
+
 		## loading and inserting item master data
-		item_entry = None
+		item_entry = {}
+		
 		self.detail_keys[ "item" ] = itemid
 		detail = replace_keys( self.detail_template, self.placeholders, self.detail_keys )
 		detail_response = load_json_from_url( detail )
@@ -136,24 +145,28 @@ class RSModelerETL:
 		except:
 			buy_limit = None
 
-		item_entry = {
-			"itemid": itemid,
-			"name": detail_response[ "item" ][ "name" ],
-			"description": detail_response[ "item" ][ "description" ],
-			"members": "true" in detail_response[ "item" ][ "members" ],
-			"units_daily_buy_limit": buy_limit
-		}
+		item_entry[ "itemid" ] = itemid
+		item_entry[ "name" ] = detail_response[ "item" ][ "name" ]
+		item_entry[ "description" ] = detail_response[ "item" ][ "description" ]
+		item_entry[ "members" ] = "true" in detail_response[ "item" ][ "members" ]
+		item_entry[ "units_daily_buy_limit" ] = buy_limit
+		return item_entry
 
-		self.item_master_table.insert_dict( item_entry )
+
+	def __extract_item_fact__( self, itemid ):
 	
 		## scraping price and unit data
 		self.count_keys[ "item" ] = itemid
 		self.count_keys[ "alpha" ] = detail_response[ "item" ][ "name" ].replace( " ", "+" )
 		count = replace_keys( self.count_template, self.placeholders, self.count_keys )
+		
+		if self.options[ 'verbose' ] > 1:
+			print( "count (fact table) url: " + count )
+		
 		count_response = load_html_from_url( count, headers = {'User-Agent':'Magic Browser'} )
 			
 		if not count_response:
-			return item_entry
+			return
 			
 		price = load_dict_from_text( count_response, PRICE_KEY_REGEX, PRICE_VAL_REGEX )
 		units = load_dict_from_text( count_response, UNITS_KEY_REGEX, UNITS_VAL_REGEX )
@@ -181,19 +194,60 @@ class RSModelerETL:
 				"day": date,
 				"price": price[ el ] if price and el in price else None,
 				"units": units[ el ] if units and el in units else None,
-			} )			
-					
+			} )
+			
+		
+		
+	def __extract_item__( self, itemid ):
+				
+		## get item data
+		item_entry = self.__extract_item_details__( itemid )
+
+		if self.options[ 'fact' ]:
+			self.__extract_item_fact__( itemid )
+			
+		 ## resolve material relationships if requested
+		if self.options[ 'materials' ] or self.options[ 'alch' ]:
+
+			scraper = OsrsWikiScraper()
+			
+			name = item_entry[ "name" ]
+			formatted_item_string = name.replace( " ", "_" ).replace( "'", "%27" )
+			content = scraper.retrieve_item_osrs_wiki( formatted_item_string )
+			
+			if self.options[ 'alch' ]:
+				item_entry[ 'low_alch' ], item_entry[ 'high_alch' ] = scraper.get_high_alch_information( content )
+				print( item_entry )
+			
+			if self.options[ 'materials' ]:
+		 
+		 		if self.options[ 'verbose' ]:
+		 			print( 'checking material relationships for ' + name + ' ...' )
+		 		
+		 		materials = scraper.get_material_relationships( content )
+		 		
+		 		if materials:
+		 		
+		 			for material, quantity in materials:
+		 			
+		 				if material in self.catalog:
+		 					self.item_materials_table.insert_dict( {
+		 						'parent_itemid': itemid
+		 						, 'child_itemid': self.catalog[ material ]
+		 						, 'n_required': quantity
+		 					} )
+				
+		## insert into the item master table
+		self.item_master_table.insert_dict( item_entry )
+		
 		if self.options[ 'verbose' ]:
 			print( "successfully loaded item " + str( itemid ) + " ..." )
-			
-		return item_entry
-		
 
 		
 	def __extract_item_catalog__( self ):
 	
 		## extract itemids from current catalog
-		items = []
+		items = {}
 		
 		if self.options[ 'verbose' ]:
 			print( "collecting items from osrs catalog..." )
@@ -220,9 +274,13 @@ class RSModelerETL:
 				if not catalog or not len( catalog[ "items" ] ):
 					break
 					
-				items.extend( [ ( e[ "id" ], e[ "name" ] ) for e in catalog[ "items" ] ] )
-				
+				## extend the catalog
+				for e in catalog[ "items" ]:
+					items[ e[ "name" ] ] = e[ "id" ]
+					
 				self.catalog_keys[ "page" ] = self.catalog_keys[ "page" ] + 1
+				
+				sleep( 1 )
 
 		return items
 
@@ -231,38 +289,11 @@ class RSModelerETL:
 	def __extract__( self ):
 		
 		## establish catalog ids from query
-		items = self.__extract_item_catalog__()
-		ids = [ e[ 0 ] for e in items ]
-		names = [ e[ 1 ] for e in items ]
+		self.catalog = self.__extract_item_catalog__()
 		
 		## extract item details
-		for itemid, name in items:
-		
-			entry = self.__extract_item__( itemid )
-	 		 
-		 	## resolve material relationships if requested
-			if self.options[ 'materials' ]:
-
-		 		scraper = OsrsWikiScraper()
-		 		
-		 		if self.options[ 'verbose' ]:
-		 			print( 'checking material relationships for ' + name + ' ...' )
-		 		
-		 		formatted_item_string = name.replace( " ", "_" ).replace( "'", "%27" )
-		 		content = scraper.retrieve_item_osrs_wiki( formatted_item_string )
-		 		materials = scraper.get_material_relationships( content )
-		 		
-		 		if materials:
-		 			
-		 			for material, quantity in materials:
-					
-					    if material in names:
-					    	self.item_materials_table.insert_dict( {
-					    		'parent_itemid': itemid
-					    		, 'child_itemid': ids[ names.index( material ) ]
-					    		, 'n_required': quantity
-					    	} )
-
+		for name, itemid in self.catalog.items():
+			self.__extract_item__( itemid )
 			sleep( self.options[ 'timer' ] )
 	 	
 		return True

@@ -84,6 +84,8 @@ class ItemMasterTable( TableAdapter ):
         description text,
         members bit,
 	units_daily_buy_limit int,
+	high_alch int,
+	low_alch int,
 	PRIMARY KEY( itemid )
       )
     ''' )
