@@ -1,26 +1,24 @@
 ALCH_DEFAULT = False
 ALPHABET_DEFAULT = "abcdefghijklmnopqrstuvwxyz"
 DAY_DEFAULT = None
-END_PAGE_DEFAULT = -1
 FACT_DEFAULT = False
 MEMBERS_DEFAULT = False
+PAGE_DEFAULT = None
 PRICE_KEY_REGEX = "average180.*Date\('(.*)'\).*"
 PRICE_VAL_REGEX = "average180.*\), (.*?),"
 UNITS_KEY_REGEX = "trade180.*Date\('(.*)'\).*"
 UNITS_VAL_REGEX = "trade180.*\), (.*)]"
 REQUEST_TIMER_DEFAULT = 3
 RESOLVE_MATERIALS_DEFAULT = False
-START_PAGE_DEFAULT = 1
 VERBOSE_DEFAULT = 0
 OPTIONS_DEFAULT = {
 	"alch": ALCH_DEFAULT
 	, "alpha": ALPHABET_DEFAULT
 	, "day": DAY_DEFAULT
-	, "end": END_PAGE_DEFAULT
 	, "fact": FACT_DEFAULT
 	, "materials": RESOLVE_MATERIALS_DEFAULT
 	, "members": MEMBERS_DEFAULT
-	, "start": START_PAGE_DEFAULT
+	, "page": PAGE_DEFAULT
 	, "timer": REQUEST_TIMER_DEFAULT
 	, "verbose": VERBOSE_DEFAULT
 }

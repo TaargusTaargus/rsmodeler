@@ -153,11 +153,14 @@ class RSModelerETL:
 		return item_entry
 
 
-	def __extract_item_fact__( self, itemid ):
+	def __extract_item_fact__( self, itemid, name ):
+	
+		if self.options[ 'verbose' ]:
+			print( "extracting fact information for " + name + " ..." )
 	
 		## scraping price and unit data
 		self.count_keys[ "item" ] = itemid
-		self.count_keys[ "alpha" ] = detail_response[ "item" ][ "name" ].replace( " ", "+" )
+		self.count_keys[ "alpha" ] = name.replace( " ", "+" )
 		count = replace_keys( self.count_template, self.placeholders, self.count_keys )
 		
 		if self.options[ 'verbose' ] > 1:
@@ -204,7 +207,7 @@ class RSModelerETL:
 		item_entry = self.__extract_item_details__( itemid )
 
 		if self.options[ 'fact' ]:
-			self.__extract_item_fact__( itemid )
+			self.__extract_item_fact__( itemid, item_entry[ 'name' ] )
 			
 		 ## resolve material relationships if requested
 		if self.options[ 'materials' ] or self.options[ 'alch' ]:
@@ -255,9 +258,12 @@ class RSModelerETL:
 		for letter in self.options[ 'alpha' ]:
 		
 			self.catalog_keys[ "alpha" ] = letter
-			self.catalog_keys[ "page" ] = self.options[ 'start' ]
+			if self.options[ "page" ]:
+				self.catalog_keys[ "page" ] = self.options[ "page" ]
+			else:
+				self.catalog_keys[ "page" ] = 1
 		
-			while self.options[ 'end' ] - self.catalog_keys[ "page" ] + 1:
+			while not self.options[ "page" ] or self.catalog_keys[ "page" ] <= self.options[ "page" ]:
 			
 				catalog = replace_keys( self.catalog_template, self.placeholders, self.catalog_keys )
 				
