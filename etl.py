@@ -13,6 +13,7 @@ class OsrsWikiScraper:
 
 	def get_high_alch_information( self, html_content ):
 
+		
 		LOW_ALCH_PATTERN = r'Low alch.*?(\d+,\d+)* coins'
 		HIGH_ALCH_PATTERN = r'High alch.*?(\d+,\d+)* coins'
 		
@@ -220,7 +221,6 @@ class RSModelerETL:
 			
 			if self.options[ 'alch' ]:
 				item_entry[ 'low_alch' ], item_entry[ 'high_alch' ] = scraper.get_high_alch_information( content )
-				print( item_entry )
 			
 			if self.options[ 'materials' ]:
 		 
@@ -423,7 +423,12 @@ class RSModelerETL:
 			print( "beginning extract..." )
 			
 
-		self.__extract__()
+		try:
+			self.__extract__()
+		except Exception as e:
+			print( "Ran into an issue during transform process." )
+			print( e )
+			return False
 
 		if self.options[ 'verbose' ]:
 			print( "beginning transform..." )
