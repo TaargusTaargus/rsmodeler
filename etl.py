@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from constants import BUY_LIMITS, OPTIONS_DEFAULT, OSRS_API_ROUTES, PRICE_KEY_REGEX, PRICE_VAL_REGEX, UNITS_KEY_REGEX, UNITS_VAL_REGEX
 from datetime import datetime
-from db import DataModelTable, ItemDailyFactsTable, ItemMasterTable, ItemMaterialsTable
+from db import ItemDailyFactsTable, ItemInvestmentScoreTable, ItemMasterTable, ItemMaterialsTable, ItemMaterialsPriceTable
 from os.path import sep
 from json import load as jload
 from sqlite3 import connect
@@ -91,13 +91,14 @@ class RSModelerETL:
 		self.db_path = db_path
 		self.options = options
 		self.tmp_db = connect( ":memory:" )
-		
-		## setting up table connections in db
-		self.data_model_table = DataModelTable( self.tmp_db )
+
+        ## setting up table connections in db
 		self.item_daily_fact_table = ItemDailyFactsTable( self.tmp_db )
+		self.item_investment_score_table = ItemInvestmentScoreTable( self.tmp_db )
 		self.item_master_table = ItemMasterTable( self.tmp_db )
 		self.item_materials_table = ItemMaterialsTable( self.tmp_db )
-		
+		self.item_materials_price_table = ItemMaterialsPriceTable( self.tmp_db )
+                
 		## state variables
 		self.catalog = []
 		
@@ -306,7 +307,44 @@ class RSModelerETL:
 
 
 	def __transform__( self ):
-		self.data_model_table.cursor.execute( '''
+        ## create material price table
+		self.item_materials_price_table.cursor.execute( '''
+            WITH CTE_ITEM AS
+            (
+                SELECT DISTINCT 
+                    day
+                    , itemid
+                FROM ITEM_DAILY_FACTS
+            )
+            , CTE_BASE AS
+            (
+                SELECT 
+                    i.*
+                    , m.*
+                FROM CTE_ITEM i
+                LEFT JOIN ITEM_MATERIALS m
+                    ON m.PARENT_ITEMID = i.ITEMID
+            )
+            , CTE_MATERIAL_AGG AS
+            (
+                SELECT
+                    b.itemid
+                    , b.day
+                    , SUM( p.price * b.n_required ) AS material_price
+                FROM CTE_BASE b
+                LEFT JOIN ITEM_DAILY_FACTS p
+                    ON b.CHILD_ITEMID = p.ITEMID
+                    AND b.DAY = p.DAY
+                GROUP BY b.ITEMID, b.DAY
+            )
+            INSERT INTO ''' + self.item_materials_price_table.NAME + '''
+            SELECT 
+                a.*
+            FROM CTE_MATERIAL_AGG a
+        ''' )
+        
+        ## create investment table
+		self.item_investment_score_table.cursor.execute( '''
 			-- get some simple statistical features
 			WITH CTE_FACTS_AGG AS 
 			( 
@@ -370,7 +408,7 @@ class RSModelerETL:
 				INNER JOIN CTE_VOLATILITY v
 					ON c.ITEMID = v.ITEMID
 			)
-			INSERT INTO DATA_MODEL
+			INSERT INTO ''' + self.item_investment_score_table.NAME + '''
 			SELECT 
 				*
 				, ROW_NUMBER() OVER (ORDER BY SCORE DESC) AS SCORE_RANK
@@ -385,9 +423,10 @@ class RSModelerETL:
 		
 		# Ensure tables exist
 		ItemDailyFactsTable( dest_conn )
+		ItemInvestmentScoreTable( dest_conn )
 		ItemMasterTable( dest_conn )
 		ItemMaterialsTable( dest_conn )
-		DataModelTable( dest_conn )
+		ItemMaterialsPriceTable( dest_conn )
 
 		# Attach the destination database
 		dest_conn.execute( "ATTACH DATABASE '" + self.db_path + "' AS dest" )
@@ -397,7 +436,7 @@ class RSModelerETL:
 		dest_cursor = dest_conn.cursor()
 
 		# Copy data from the source table to the destination table
-		for table in [ ItemDailyFactsTable.NAME, ItemMasterTable.NAME, ItemMaterialsTable.NAME, DataModelTable.NAME ]:
+		for table in [ ItemDailyFactsTable.NAME, ItemInvestmentScoreTable.NAME, ItemMasterTable.NAME, ItemMaterialsTable.NAME, ItemMaterialsPriceTable.NAME ]:
 			source_cursor.execute( "SELECT * FROM " + table ) 
 			data_to_copy = source_cursor.fetchall()
 			

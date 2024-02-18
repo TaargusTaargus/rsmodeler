@@ -91,9 +91,10 @@ class ItemMasterTable( TableAdapter ):
     ''' )
     self.db.commit()
 
-class DataModelTable( TableAdapter ):
 
-  NAME = "DATA_MODEL"
+class ItemInvestmentScoreTable( TableAdapter ):
+
+  NAME = "CUR_ITEM_INVESTMENT_SCORE"
 
   def __init__( self, db ):
     TableAdapter.__init__( self, db, self.NAME )
@@ -101,14 +102,32 @@ class DataModelTable( TableAdapter ):
       CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
       ( 
         itemid int,
-	price_potential float,
-	volatility int,
-	score float,
-	score_rank int,
-	PRIMARY KEY( itemid )
+        price_potential float,
+        volatility int,
+        score float,
+        score_rank int,
+        PRIMARY KEY( itemid )
       )
     ''' )
     self.db.commit()
+
+
+class ItemMaterialsPriceTable( TableAdapter ):
+
+  NAME = "CUR_ITEM_MATERIALS_PRICE"
+
+  def __init__( self, db ):
+    TableAdapter.__init__( self, db, self.NAME )
+    self.cursor.execute( '''
+      CREATE TABLE IF NOT EXISTS ''' + self.NAME + '''
+      ( 
+        itemid int,
+        day date,
+		material_price float
+      )
+    ''' )
+    self.db.commit()
+
 
 class ItemMaterialsTable( TableAdapter ):
 
